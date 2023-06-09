@@ -1,0 +1,48 @@
+username = 09129585714
+pass = QUEADMINISTRATOR174%!AbfsbflbdbPSJAFISHF@UNIQUEDOMIN.com
+
+
+
+
+
+<form method="POST" action="{% url 'add_to_cart' item.id %}">
+  {% csrf_token %}
+  <input type="number" name="quantity" value="1" min="1">
+  <button type="submit">افزودن به سبد خرید</button>
+</form>
+
+--------------------------------------
+
+<a href="{% url 'add_to_cart' %}">افزودن محصول به سبد خرید</a>
+-------------------------------
+fetch('آدرس_API', {
+  method: 'POST',
+  body: new FormData(document.getElementById('فرم')),
+})
+  .then(response => response.json())
+  .then(data => {
+    // نمایش اطلاعات در قالب نوتیف
+    alert(data.message);
+  })
+  .catch(error => {
+    console.error('خطا:', error);
+  });
+------------------------------------
+        # Paginate all posts by 6 per page
+        paginator = Paginator(all_posts, 6)
+        # Try to get the ?page=x value
+        page = request.GET.get("page")
+        try:
+            # If the page exists and the ?page=x is an int
+            posts = paginator.page(page)
+        except PageNotAnInteger:
+            # If the ?page=x is not an int; show the first page
+            posts = paginator.page(1)
+        except EmptyPage:
+            # If the ?page=x is out of range (too high most likely)
+            # Then return the last page
+            posts = paginator.page(paginator.num_pages)
+
+        # "posts" will have child pages; you'll need to use .specific in the template
+        # in order to access child properties, such as youtube_video_id and subtitle
+-------------------------------------------------------
