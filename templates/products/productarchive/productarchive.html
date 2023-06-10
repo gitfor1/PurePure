@@ -41,14 +41,6 @@
               <input type="checkbox" id="inventory" /><br />
               <label for="specialdiscount">محصولات تخفیف دار</label>
               <input type="checkbox" id="specialdiscount" />
-              <label for="specialdiscount">پرفروش ترین محصولات</label>
-              <input type="checkbox" id="specialdiscount" />
-              <label for="specialdiscount">گران ترین محصولات</label>
-              <input type="checkbox" id="specialdiscount" />
-              <label for="specialdiscount">ارزان ترین محصولات</label>
-              <input type="checkbox" id="specialdiscount" />
-              <label for="specialdiscount">جدید ترین محصولات</label>
-              <input type="checkbox" id="specialdiscount" />
             </div>
             <div class="p-4 mb-3 asidefilter">
               <h4 class="h3 bchs">فیلتر قیمت</h4>
@@ -84,6 +76,10 @@
           <div class="sortpro">
             <span class="bi bi-sort-down"> مرتب سازی: </span>
             <span class="icon2">پیشفرض</span>
+            <span class="icon2">پرفروش‌ترین‌</span>
+            <span class="icon2">ارزان‌ترین</span>
+            <span class="icon2">گران‌ترین</span>
+            <span class="icon2">جدیدترین</span>
           </div>
 
           <div id="PRODUCT" class="row">
@@ -121,18 +117,6 @@ $(document).ready(function() {
           var productPostsAPIURL = `/UNIQUEAPI174/pages/${productPageId}`;
           $.getJSON(productPostsAPIURL, function(productsData) {
             var product = productsData;
-            var colorOptions = '';
-            if (product.PRODUCT_COLORS.length > 0) {
-              for (var j = 0; j < product.PRODUCT_COLORS.length; j++) {
-                colorOptions += `<option value="${product.PRODUCT_COLORS[j].color}">${product.PRODUCT_COLORS[j].color_title}</option>`;
-              }
-            }
-            var colorSelect = `
-              <select id="color-input-${productPageId}" class="color-select">
-                <option value="">انتخاب رنگ</option>
-                ${colorOptions}
-              </select>
-            `;
             if (product.PRODUCT_OFFER.length > 0) {
               var postHTML = `
                 <div id="PRODUCT_BODY" class="cardpro" style="width: 18rem">
@@ -146,15 +130,8 @@ $(document).ready(function() {
                     <hr />
                     <div id="TOOLS" class="tolspro">
                       <span class="bi bi-heart"></span>
-                      ${colorSelect}
                       <span class="price"></span>
-                      <form method="POST" action="{% url 'add_to_cart' %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="product_id" value="${productPageId}">
-                        <input type="hidden" class="color-input" name="selected_color" value="">
-                        <input type="number" name="quantity" value="1" min="1">
-                        <button class="btn btn-danger addtocard" type="submit">افزودن به سبد خرید</button>
-                      </form>
+                      <a href="${product.html_url}"><button class="btn btn-danger addtocard" type="submit">مشاهده و خرید</button></a>
                       <span class="bi bi-arrow-left-right"></span>
                     </div>
                   </div>
@@ -173,15 +150,8 @@ $(document).ready(function() {
                     <hr />
                     <div id="TOOLS" class="tolspro">
                       <span class="bi bi-heart"></span>
-                      ${colorSelect}
                       <span class="price"></span>
-                      <form method="POST" action="{% url 'add_to_cart' %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="product_id" value="${productPageId}">
-                        <input type="hidden" class="color-input" name="selected_color" value="">
-                        <input type="number" name="quantity" value="1" min="1">
-                        <button class="btn btn-danger addtocard" type="submit">افزودن به سبد خرید</button>
-                      </form>
+                      <a href="${product.html_url}"><button class="btn btn-danger addtocard" type="submit">مشاهده و خرید</button></a>
                       <span class="bi bi-arrow-left-right"></span>
                     </div>
                   </div>

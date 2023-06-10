@@ -1,7 +1,27 @@
 username = 09129585714
 pass = QUEADMINISTRATOR174%!AbfsbflbdbPSJAFISHF@UNIQUEDOMIN.com
 
+            var colorOptions = '';
+            if (product.PRODUCT_COLORS.length > 0) {
+              for (var j = 0; j < product.PRODUCT_COLORS.length; j++) {
+                colorOptions += `<option value="${product.PRODUCT_COLORS[j].color}">${product.PRODUCT_COLORS[j].color_title}</option>`;
+              }
+            }
+            var colorSelect = `
+              <select id="color-input-${productPageId}" class="color-select">
+                <option value="">انتخاب رنگ</option>
+                ${colorOptions}
+              </select>
+            `;
+            ${colorSelect}
 
+                      <form method="POST" action="{% url 'add_to_cart' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="product_id" value="${productPageId}">
+                        <input type="hidden" class="color-input" name="selected_color" value="">
+                        <input type="number" name="quantity" value="1" min="1">
+                        <button class="btn btn-danger addtocard" type="submit">افزودن به سبد خرید</button>
+                      </form>
 
 
 
