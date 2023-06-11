@@ -160,12 +160,6 @@ $(document).ready(function() {
               $('#PRODUCT').append(postHTML);
             }
 
-            $(`#color-input-${productPageId}`).change(function() {
-              var selectedColor = $(this).val();
-              $(this).closest('form').find('.color-input').val(selectedColor);
-              console.log(`Selected color: ${selectedColor}`);
-            });
-
           });
         }
         if (page >= totalPages) {
