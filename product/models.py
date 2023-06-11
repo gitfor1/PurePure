@@ -117,7 +117,7 @@ class ProductOffer(Orderable):
     ''' Product Offer '''
     product_offer = ParentalKey("product.InventoryItem", related_name="PRODUCT_OFFER")
     offer_title = models.CharField(max_length=14, verbose_name='عنوان تخفیف', db_index=True,)
-    value = models.PositiveIntegerField(max_digits=10, verbose_name='مبلغ جدید')
+    value = models.PositiveIntegerField(verbose_name='مبلغ جدید')
     offer_des = models.CharField(max_length=35, verbose_name='توضیحات تخفیف', null=True, blank=True)
     collection = models.ForeignKey(
         'wagtailcore.Collection',
