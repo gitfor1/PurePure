@@ -64,7 +64,7 @@ class Index(Page):
 class Comments(models.Model):
     title = models.CharField(max_length=100)
     name = models.CharField(max_length=100)
-    love = models.
+    love = models.PositiveIntegerField(verbose_name='امتیاز', blank=False, null=False)
     email = models.EmailField()
     body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)

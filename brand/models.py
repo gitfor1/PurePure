@@ -27,7 +27,7 @@ class BrandIndex(Page, RoutablePageMixin):
         FieldPanel('body'),
     ]
     max_count = 1
-    objects = CategoryPageManager()
+    objects = BrandPageManager()
     content_panels = Page.content_panels + [
         FieldPanel('intro')
     ]
@@ -70,17 +70,14 @@ class BrandPage(Page, RoutablePageMixin):
     content_panels = Page.content_panels + [
         FieldPanel('description'),
         FieldPanel('keywords'),
-        FieldPanel('collection'),
     ]
 
     api_fields = [
         APIField('description'),
-        APIField('collection'),
     ]
 
     search_fields = Page.search_fields + [
         index.SearchField('description'),
-        index.SearchField('collection'),
     ]
 
     def get_template(self, request, *args, **kwargs):

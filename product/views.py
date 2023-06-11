@@ -1,4 +1,4 @@
-from .models import InventoryItem, ProductBrand, CartItem, Discount
+from .models import InventoryItem, CartItem, Discount
 from index.extensions.group_list_convertor import group_list
 from django.contrib.auth.decorators import login_required
 from index.extensions.http_service import get_client_ip

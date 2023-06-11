@@ -67,7 +67,7 @@ class CategoryBlog(Page, RoutablePageMixin):
     keywords = models.TextField(verbose_name='کلید واژه دسته بندی مقاله', db_index=True, null=True, blank=True)
     description = models.CharField(max_length=60, verbose_name='توضیحات کامل دسته بندی')
     collection = models.ForeignKey(
-        'index.categories',
+        'wagtailcore.Collection',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -114,7 +114,7 @@ class CategoryProduct(Page, RoutablePageMixin):
     keywords = models.TextField(verbose_name='کلید واژه دسته بندی محصول', db_index=True, null=True, blank=True)
     description = models.CharField(max_length=60, verbose_name='توضیحات کامل دسته بندی')
     collection = models.ForeignKey(
-        'index.categories',
+        'wagtailcore.Collection',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,

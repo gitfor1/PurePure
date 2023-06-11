@@ -33,7 +33,7 @@ RUN pip3 install -r requirements.txt
 RUN pip3 install wagtail-color-panel
 
 # Run migrations
-RUN python3 manage.py makemigrations --empty blog && python3 manage.py makemigrations --empty product && python3 manage.py makemigrations --empty category && python3 manage.py makemigrations user_accounts && python3 manage.py makemigrations index && python3 manage.py makemigrations product && python3 manage.py makemigrations blog && python3 manage.py makemigrations category
+RUN python3 manage.py makemigrations --empty blog && python3 manage.py makemigrations --empty product && python3 manage.py makemigrations --empty category && python3 manage.py makemigrations --empty brand && python3 manage.py makemigrations user_accounts && python3 manage.py makemigrations index && python3 manage.py makemigrations product && python3 manage.py makemigrations blog && python3 manage.py makemigrations category && python3 manage.py makemigrations brand
 RUN python3 manage.py migrate
 
 # Create a superuser

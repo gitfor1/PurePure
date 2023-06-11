@@ -60,7 +60,7 @@ class ProductColor(Orderable):
     pquantity = models.IntegerField(verbose_name='تعداد رنگ بندی :')
     color_des = models.CharField(max_length=35, verbose_name='توضیحات', null=True, blank=True)
     collection = models.ForeignKey(
-        'index.categories',
+        'wagtailcore.Collection',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -191,13 +191,6 @@ class Discount(models.Model):
     value = models.DecimalField(max_digits=10, decimal_places=2)
     start_date = models.DateField()
     end_date = models.DateField()
-    collection = models.ForeignKey(
-        'index.categories',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        help_text='مجموعه برای تخفیف انتخاب کنید',
-    )
 
     def check_dis(self,code):
         if code == self.code :
@@ -238,7 +231,7 @@ class InventoryItem(RoutablePageMixin, Page):
     )
     quantity = models.PositiveIntegerField(verbose_name='تعداد محصول', null=True)
     date = models.DateTimeField("Post date", default=timezone.now)
-    brand = image = models.ForeignKey(
+    brand = models.ForeignKey(
         'brand.BrandPage',
         null=True, blank=True,
         on_delete=models.SET_NULL,
