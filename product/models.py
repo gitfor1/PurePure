@@ -52,28 +52,6 @@ class ProductChildPageSerializer(Field):
         ]
 
 
-@register_snippet
-class ProductBrand(models.Model):
-    ''' Product Brands '''
-    title = models.CharField(max_length=300, verbose_name='نام برند', db_index=True)
-    collection = models.ForeignKey(
-        'index.categories',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        help_text='یک مجموعه برای برند انتخاب کنید',
-    )
-    url_title = models.CharField(max_length=300, verbose_name='نام در url', db_index=True)
-    is_active = models.BooleanField(verbose_name='فعال / غیرفعال')
-
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        verbose_name = 'برند محصول'
-        verbose_name_plural = 'برند محصولات'
-
-
 class ProductColor(Orderable):
     ''' Product Color '''
     product_color = ParentalKey("product.InventoryItem", related_name="PRODUCT_COLORS")
@@ -154,6 +132,10 @@ class ProductIndex(RoutablePageMixin, Page):
 
     intro = RichTextField(blank=True, verbose_name='نام صفحه محصولات سایت')
 
+    description = models.TextField(verbose_name='توضیجات', db_index=True, null=True, blank=True)
+
+    keywords = models.TextField(verbose_name='کلید واژه صفحه محصولات', db_index=True, null=True, blank=True)
+
     objects = ProductPageManager()
 
     max_count = 1
@@ -163,7 +145,9 @@ class ProductIndex(RoutablePageMixin, Page):
     parent_page_types = ['index.Index']
 
     content_panels = Page.content_panels + [
-        FieldPanel('intro')
+        FieldPanel('intro'),
+        FieldPanel('description'),
+        FieldPanel('keywords'),
     ]
 
     api_fields = [
@@ -233,6 +217,8 @@ class InventoryItem(RoutablePageMixin, Page):
     ''' Inventory => &&& <= Products '''
     product_title = models.CharField(max_length=300, verbose_name='نام و مدل محصول', null=True, blank=True)
     author = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
+    keywords = models.TextField(verbose_name='کلید واژه محصول', db_index=True, null=True, blank=True)
+    description = RichTextField(verbose_name='درباره محصول', db_index=True, null=True, blank=True)
     comments = models.ManyToManyField('index.Comments', blank=True)
     collection = models.ForeignKey(
         'category.CategoryProduct',
@@ -244,18 +230,24 @@ class InventoryItem(RoutablePageMixin, Page):
 
     image = models.ForeignKey(
         'wagtailimages.Image',
-        null=True, blank=True,
-        on_delete=models.SET_NULL,
+        null=False, blank=False,
+        on_delete=models.PROTECT,
         related_name='+',
-        verbose_name='تصویر / تصاویر محصول',
-        help_text='تصویر/تصاویر محصول را اضافه کنید',
+        verbose_name='تصویر شاخص محصول',
+        help_text='تصویر شاخص محصول را اضافه کنید',
     )
     quantity = models.PositiveIntegerField(verbose_name='تعداد محصول', null=True)
     date = models.DateTimeField("Post date", default=timezone.now)
-    brand = models.OneToOneField(ProductBrand, on_delete=models.PROTECT, verbose_name='برند', null=True, blank=True)
+    brand = image = models.ForeignKey(
+        'brand.BrandPage',
+        null=True, blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name='برند محصول',
+        help_text='یک برند برای محصول انتخاب کنید',
+    )
     price = models.PositiveIntegerField(verbose_name='قیمت', blank=False, null=False)
-    short_description = models.CharField(max_length=30, db_index=True, null=True, blank=True, verbose_name='توضیحات کوتاه')
-    description = models.TextField(verbose_name='توضیحات اصلی', db_index=True, null=True, blank=True)
+    short_description = models.CharField(max_length=300, db_index=True, null=True, blank=True, verbose_name='توضیحات کوتاه')
     is_active = models.BooleanField(default=False, verbose_name='فعال / غیرفعال', blank=False, null=False)
     is_available = models.BooleanField(default=True, verbose_name='موجودی / عدم موجودی', blank=False, null=False)
     total_visits = models.IntegerField(verbose_name='تعداد کل بازدید', default=0)
@@ -267,6 +259,7 @@ class InventoryItem(RoutablePageMixin, Page):
     content_panels = Page.content_panels + [
         FieldPanel('product_title'),
         FieldPanel('brand'),
+        FieldPanel('keywords'),
         FieldPanel('price'),
         FieldPanel('image'),
         MultiFieldPanel([

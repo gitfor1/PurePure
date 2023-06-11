@@ -23,14 +23,18 @@ class CategoryPageManager(PageManager):
 # Category app index model
 class CategoryIndex(Page, RoutablePageMixin):
     intro = RichTextField(blank=True, verbose_name='نام صفحه دسته بندی های سایت')
+    description = models.TextField(verbose_name='توضیجات', db_index=True, null=True, blank=True)
+    keywords = models.TextField(verbose_name='کلید واژه صفحه دسته بندی ها', db_index=True, null=True, blank=True)
     content_panels = Page.content_panels + [
         FieldPanel('body'),
     ]
     max_count = 1
     objects = CategoryPageManager()
     content_panels = Page.content_panels + [
-        FieldPanel('intro')
-    ]
+        FieldPanel('intro'),
+        FieldPanel('keywords'),
+        FieldPanel('description'),
+        ]
 
     subpage_types = ['category.CategoryBlog', 'category.CategoryProduct',]
 
@@ -38,7 +42,7 @@ class CategoryIndex(Page, RoutablePageMixin):
 
 
     def get_template(self, request, *args, **kwargs):
-        ajax_template = 'category/categoriesarchive.html'
+        ajax_template = 'category/category_archive/category_archive.html'
         return ajax_template
 
     def get_context(self, request, *args, **kwargs):
@@ -60,13 +64,14 @@ class CategoryIndex(Page, RoutablePageMixin):
 
 class CategoryBlog(Page, RoutablePageMixin):
     author = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL,)
+    keywords = models.TextField(verbose_name='کلید واژه دسته بندی مقاله', db_index=True, null=True, blank=True)
     description = models.CharField(max_length=60, verbose_name='توضیحات کامل دسته بندی')
     collection = models.ForeignKey(
         'index.categories',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        help_text='یک مجموعه برای دسته بندی وبلاگ انتخاب کنید',
+        help_text='یک مجموعه برای دسته بندی مقاله انتخاب کنید',
     )
 
     subpage_types = []
@@ -75,6 +80,7 @@ class CategoryBlog(Page, RoutablePageMixin):
 
     content_panels = Page.content_panels + [
         FieldPanel('description'),
+        FieldPanel('keywords'),
         FieldPanel('collection'),
     ]
 
@@ -89,7 +95,7 @@ class CategoryBlog(Page, RoutablePageMixin):
     ]
 
     def get_template(self, request, *args, **kwargs):
-        ajax_template = 'category/blog_categories.html'
+        ajax_template = 'category/blog_category/blog_category.html'
         return ajax_template
 
     def serve(self, request, *args, **kwargs):
@@ -105,6 +111,7 @@ class CategoryBlog(Page, RoutablePageMixin):
 
 class CategoryProduct(Page, RoutablePageMixin):
     author = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL,)
+    keywords = models.TextField(verbose_name='کلید واژه دسته بندی محصول', db_index=True, null=True, blank=True)
     description = models.CharField(max_length=60, verbose_name='توضیحات کامل دسته بندی')
     collection = models.ForeignKey(
         'index.categories',
@@ -120,6 +127,7 @@ class CategoryProduct(Page, RoutablePageMixin):
 
     content_panels = Page.content_panels + [
         FieldPanel('description'),
+        FieldPanel('keywords'),
         FieldPanel('collection'),
     ]
 
@@ -134,7 +142,7 @@ class CategoryProduct(Page, RoutablePageMixin):
     ]
 
     def get_template(self, request, *args, **kwargs):
-        ajax_template = 'category/product_categories.html'
+        ajax_template = 'category/product_category/product_category.html'
         return ajax_template
 
     def serve(self, request, *args, **kwargs):

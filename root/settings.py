@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     'category',
     'product',
     'index',
+    'brand',
     'blog',
 ]
 

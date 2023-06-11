@@ -29,6 +29,8 @@ class IndexPageManager(PageManager):
 # Index class
 class Index(Page):
     body = RichTextField(blank=True)
+    description = models.TextField(verbose_name='توضیجات', db_index=True, null=True, blank=True)
+    keywords = models.TextField(verbose_name='کلید واژه صفحه اصلی', db_index=True, null=True, blank=True)
 
     objects = IndexPageManager()
 
@@ -36,6 +38,8 @@ class Index(Page):
 
     content_panels = Page.content_panels + [
         FieldPanel('body'),
+        FieldPanel('keywords'),
+        FieldPanel('description'),
     ]
 
     def get_template(self, request, *args, **kwargs):
@@ -60,6 +64,7 @@ class Index(Page):
 class Comments(models.Model):
     title = models.CharField(max_length=100)
     name = models.CharField(max_length=100)
+    love = models.
     email = models.EmailField()
     body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -70,53 +75,3 @@ class Comments(models.Model):
     class Meta:
         verbose_name = 'بازخورد کاربر'
         verbose_name_plural = 'بازخورد کاربران'
-
-
-@register_snippet
-class categories(models.Model):
-    name = models.CharField(max_length=100)
-    collection = models.ForeignKey(
-        'wagtailcore.Collection',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        help_text='یک مجموعه برای دسته بندی انتخاب کنید',
-    )
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = 'دسته بندی'
-        verbose_name_plural = 'دسته بندی ها'
- 
-
-# FOOTER LINK
-class FooterLink(models.Model):
-    title = models.CharField(max_length=200, verbose_name='عنوان')
-    url = models.URLField(max_length=500, verbose_name='لینک')
-
-    class Meta:
-        verbose_name = 'لینک فوتر'
-        verbose_name_plural = 'لینک های فوتر'
-
-    def __str__(self):
-        return self.title
-
-
-# SITE SLIDER
-class Slider(models.Model):
-    title = models.CharField(max_length=200, verbose_name='عنوان')
-    url = models.URLField(max_length=500, verbose_name='لینک')
-    url_title = models.CharField(max_length=200, verbose_name='عنوان لینک')
-    description = models.TextField(verbose_name='توضیحات اسلایدر')
-    image = models.ImageField(upload_to='images/sliders', verbose_name='تصویر اسلایدر')
-    is_active = models.BooleanField(default=True, verbose_name='فعال / غیرفعال')
-
-    class Meta:
-        verbose_name = 'اسلایدر'
-        verbose_name_plural = 'اسلایدر ها'
-
-    def __str__(self):
-        return self.title

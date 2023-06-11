@@ -57,13 +57,21 @@ class BlogPageChildSerializer(Field):
 # blog app index model
 class BlogIndex(Page, RoutablePageMixin):
     intro = RichTextField(blank=True, verbose_name='نام صفحه وبلاگ سایت')
+
+    description = models.TextField(verbose_name='توضیجات', db_index=True, null=True, blank=True)
+
+    keywords = models.TextField(verbose_name='کلید واژه صفحه بلاگ', db_index=True, null=True, blank=True)
+
+
     content_panels = Page.content_panels + [
         FieldPanel('body'),
     ]
     max_count = 1
     objects = BlogPageManager()
     content_panels = Page.content_panels + [
-        FieldPanel('intro')
+        FieldPanel('intro'),
+        FieldPanel('keywords'),
+        FieldPanel('description'),
     ]
 
     subpage_types = ['blog.BlogPage']
@@ -108,6 +116,8 @@ class BlogIndex(Page, RoutablePageMixin):
 # blog page model
 class BlogPage(Page, RoutablePageMixin):
     comments = models.ManyToManyField('index.Comments', blank=True)
+    description = models.TextField(verbose_name='توضیجات', db_index=True, null=True, blank=True)
+    keywords = models.TextField(verbose_name='کلید واژه مقاله', db_index=True, null=True, blank=True)
     author = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL,)
     image = models.ForeignKey(
         'wagtailimages.Image',
@@ -127,7 +137,6 @@ class BlogPage(Page, RoutablePageMixin):
     intro = models.CharField(max_length=25, verbose_name='توضیحات ابتدایی راجب پست')
     date = models.DateTimeField("Post date",default=timezone.now)
     body = RichTextField(blank=True, verbose_name='محتوای پست')
-    description = models.CharField(max_length=60, verbose_name='توضیحات کامل پست')
 
     subpage_types = []
 
@@ -137,6 +146,7 @@ class BlogPage(Page, RoutablePageMixin):
         FieldPanel('body'),
         FieldPanel('image'),
         FieldPanel('intro'),
+        FieldPanel('keywords'),
         FieldPanel('description'),
         FieldPanel('collection'),
     ]
