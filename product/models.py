@@ -117,11 +117,7 @@ class ProductOffer(Orderable):
     ''' Product Offer '''
     product_offer = ParentalKey("product.InventoryItem", related_name="PRODUCT_OFFER")
     offer_title = models.CharField(max_length=14, verbose_name='عنوان تخفیف', db_index=True,)
-    DISCOUNT_TYPES = (
-        ('percentage', 'درصدی'),
-        ('fixed', 'ثابت'),
-    )
-    value = models.DecimalField(max_digits=10, verbose_name='مبلغ جدید')
+    value = models.PositiveIntegerField(max_digits=10, verbose_name='مبلغ جدید')
     offer_des = models.CharField(max_length=35, verbose_name='توضیحات تخفیف', null=True, blank=True)
     collection = models.ForeignKey(
         'wagtailcore.Collection',
@@ -149,8 +145,8 @@ class ProductOffer(Orderable):
         return self.offer_title
 
     class Meta:
-        verbose_name = 'رنگ بندی'
-        verbose_name_plural = 'رنگ بندی محصولات'
+        verbose_name = 'محصول تخفیف دار'
+        verbose_name_plural = 'محصولات تخفیف دار'
 
 
 class ProductIndex(RoutablePageMixin, Page):
