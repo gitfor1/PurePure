@@ -67,6 +67,7 @@
       var blogPages = data.items[0];
       $.getJSON(`/UNIQUEAPI174/pages/${blogPages.id}`, function(postsData) {
         var post = postsData;
+        document.title = post.title;
         var postHeaderContent = `<div class="h1divhead">
           <h1 class="blogh1 white-color">${post.title}</h1> </div>`;
 
@@ -74,7 +75,7 @@
           <li><a href="#" class="text-light-emphasis">${post.collection.title}</a></li>
           <li><a href="#" class="text-light-emphasis">${post.title}</a></li>`;
 
-        var postContent = `<span class="bi bi-person">${post.author}</span>
+        var postContent = `<span class="bi bi-person">2020Black</span>
               <span class="bi bi-folder2-open">${post.collection.title}</span>
               <span class="bi bi-calendar3">${post.jpub}</span>`;
 

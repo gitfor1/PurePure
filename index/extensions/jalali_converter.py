@@ -17,7 +17,7 @@ def jalali_converter(time):
             time_list[1] = month
             break
 
-    output = "{} / {} / {}".format(
+    output = "{} / {} / {}.".format(
         time_list[2],
         time_list[1],
         time_list[0],
