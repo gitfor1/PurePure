@@ -19,7 +19,7 @@ LOCAL_ACCOUNT_USERNAME_BLACKLIST = ["admin", 'security', 'secure', 'protection',
            'virus', 'vulnerabilityassessment', 'zeroday', "god"]
 
 # CSRF LOCAL TRUSTED ORIGINS :
-CSRF_LOCAL_TRUSTED_ORIGINS = ['https://gitfor1-purepure-el3zi1ivvhq.ws-eu99.gitpod.io']
+CSRF_LOCAL_TRUSTED_ORIGINS = ['https://8000-gitfor1-purepure-el3zi1ivvhq.ws-eu99.gitpod.io']
 
 # ALLOWED LOCAL HOSTS :
 ALLOWED_LOCAL_HOSTS = ['8000-gitfor1-purepure-el3zi1ivvhq.ws-eu99.gitpod.io', '127.0.0.1', 'localhost']

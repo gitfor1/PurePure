@@ -125,13 +125,13 @@ $(document).ready(function() {
                     <h3 class="card-title h4">
                       <a href="" class="black-color">${product.title}</a>
                     </h3>
-                    <span class="text-decoration-line-through icon2">${product.PRODUCT_OFFER.value}</span>
-                    <span class="red-color">${product.price}<span>تومان</span></span>
+                    <span class="text-decoration-line-through icon2">${product.price}</span>
+                    <span class="red-color">${product.PRODUCT_OFFER[0].value}<span>تومان</span></span>
                     <hr />
                     <div id="TOOLS" class="tolspro">
                       <span class="bi bi-heart"></span>
                       <span class="price"></span>
-                      <a href="${product.html_url}"><button class="btn btn-danger addtocard" type="submit">مشاهده و خرید</button></a>
+                      <a href="${product.meta.html_url}"><button class="btn btn-danger addtocard" type="submit">مشاهده و خرید</button></a>
                       <span class="bi bi-arrow-left-right"></span>
                     </div>
                   </div>

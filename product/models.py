@@ -121,7 +121,7 @@ class ProductOffer(Orderable):
         ('percentage', 'درصدی'),
         ('fixed', 'ثابت'),
     )
-    value = models.DecimalField(max_digits=10, decimal_places=2)
+    value = models.DecimalField(max_digits=10, verbose_name='مبلغ جدید')
     offer_des = models.CharField(max_length=35, verbose_name='توضیحات تخفیف', null=True, blank=True)
     collection = models.ForeignKey(
         'wagtailcore.Collection',
