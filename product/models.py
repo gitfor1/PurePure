@@ -362,9 +362,22 @@ class InventoryItem(RoutablePageMixin, Page):
 
     sell.short_description = 'فروش محصول'
 
-    class Meta:
-        verbose_name = 'محصول'
-        verbose_name_plural = 'محصولات'
+    def get_template(self, request, *args, **kwargs):
+
+        return 'products/productsingle/productsingle.html'
+
+    def serve(self, request, *args, **kwargs):
+        return render(
+            request,
+            self.get_template(request, *args, **kwargs),
+        )
+
+    def save(self, *args, **kwargs):
+        if not self.is_available:
+            self.is_available = False
+        super().save(*args, **kwargs)
+
+    save.short_description = 'ذخیره محصول'
 '''
     def get_colors(self):
         return ", ".join([color.name for color in self.colors.all()]) if self.colors.exists() else "محصول بدون رنگ بندی است"
@@ -423,23 +436,6 @@ class InventoryItem(RoutablePageMixin, Page):
             return balance_distribution
         except InventoryItem.DoesNotExist:
             return {}
-
-    def get_template(self, request, *args, **kwargs):
-
-        return 'products/productsingle/productsingle.html'
-
-    def serve(self, request, *args, **kwargs):
-        return render(
-            request,
-            self.get_template(request, *args, **kwargs),
-        )
-
-    def save(self, *args, **kwargs):
-        if not self.is_available:
-            self.is_available = False
-        super().save(*args, **kwargs)
-
-    save.short_description = 'ذخیره محصول'
 
 '''
 '''

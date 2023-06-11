@@ -22,6 +22,11 @@ pass = QUEADMINISTRATOR174%!AbfsbflbdbPSJAFISHF@UNIQUEDOMIN.com
                         <input type="number" name="quantity" value="1" min="1">
                         <button class="btn btn-danger addtocard" type="submit">افزودن به سبد خرید</button>
                       </form>
+            $(`#color-input-${productPageId}`).change(function() {
+              var selectedColor = $(this).val();
+              $(this).closest('form').find('.color-input').val(selectedColor);
+              console.log(`Selected color: ${selectedColor}`);
+            });
 
 
 
