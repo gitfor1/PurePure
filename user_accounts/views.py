@@ -12,6 +12,10 @@ from .models import user_accounts
 from django.views import View
 
 
+@login_required
+def dashboardView(request):
+    pass
+
 def login_signup(request):
     if request.method == 'POST':
 

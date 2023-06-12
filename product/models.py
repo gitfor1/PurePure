@@ -75,7 +75,7 @@ class ProductSlide(Orderable):
 
     panels = [
         FieldPanel('slide_title'),
-        NativeColorPanel('image'),
+        FieldPanel('image'),
         FieldPanel('slide_desc'),
         FieldPanel('collection'),
         ]
