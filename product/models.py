@@ -243,6 +243,12 @@ class InventoryItem(RoutablePageMixin, Page):
     short_description = models.CharField(max_length=300, db_index=True, null=True, blank=True, verbose_name='توضیحات کوتاه')
     is_active = models.BooleanField(default=False, verbose_name='فعال / غیرفعال', blank=False, null=False)
     is_available = models.BooleanField(default=True, verbose_name='موجودی / عدم موجودی', blank=False, null=False)
+    product_type = models.CharField(max_length=30, db_index=True, null=True, blank=True, verbose_name='نوع محصول')
+    product_jense = models.CharField(max_length=30, db_index=True, null=True, blank=True, verbose_name='جنس محصول')
+    product_wight = models.CharField(max_length=30, db_index=True, null=True, blank=True, verbose_name='وزن محصول')
+    product_abad = models.CharField(max_length=30, db_index=True, null=True, blank=True, verbose_name='ابعاد خارجی محصول')
+    product_size = models.CharField(max_length=30, db_index=True, null=True, blank=True, verbose_name='سایز محصول')
+    product_garr = models.CharField(max_length=30, db_index=True, null=True, blank=True, verbose_name='گارانتی محصول')
     total_visits = models.IntegerField(verbose_name='تعداد کل بازدید', default=0)
     
     subpage_types = []
@@ -265,6 +271,12 @@ class InventoryItem(RoutablePageMixin, Page):
             InlinePanel("PRODUCT_OFFER"),
         ], heading="افزودن تخفیف به محصول"),
         FieldPanel('is_active'),
+        FieldPanel("product_type"),
+        FieldPanel("product_jense"),
+        FieldPanel("product_wight"),
+        FieldPanel("product_abad"),
+        FieldPanel("product_size"),
+        FieldPanel("product_garr"),
         FieldPanel('collection'),
     ]
 
@@ -281,6 +293,12 @@ class InventoryItem(RoutablePageMixin, Page):
         APIField('short_description'),
         APIField('description'),
         APIField('PRODUCT_COLORS'),
+        APIField("product_type"),
+        APIField("product_jense"),
+        APIField("product_wight"),
+        APIField("product_abad"),
+        APIField("product_size"),
+        APIField("product_garr"),
         APIField('PRODUCT_OFFER'),
         APIField('is_active'),
         APIField('is_available'),

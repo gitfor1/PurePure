@@ -24,19 +24,12 @@
       <div class="row">
         <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-4 col-sm-12 col-12">
           <div class="position-sticky" style="top: 1rem">
-            <div class="p-4 mb-3 asidefilter">
+            <div id="setCat" class="p-4 mb-3 asidefilter">
               <h4 class="h3 bchs">انتخاب دسته بندی</h4>
-              <ul class="navliststyle asidecat">
-                <li class="bbs1px">
-                  <a href="" class="black-color ahover">دسته بندی یک</a>
-                  <span>6</span>
-                </li>
-              </ul>
+              <!--LOAD FROM JS-->
             </div>
             <div class="p-4 mb-3 asidefilter">
               <h4 class="h3 bchs">فیلتر محصول</h4>
-              <label for="specialdiscount">بدون فیلتر</label>
-              <input type="checkbox" id="specialdiscount" /><br />
               <label for="inventory">محصولات موجود </label>
               <input type="checkbox" id="inventory" /><br />
               <label for="specialdiscount">محصولات تخفیف دار</label>
@@ -55,17 +48,8 @@
                 placeholder="حداکثر قیمت تا.....تومان"
               />
               <button
+                id="rangePriceFilter"
                 class="btn btn-outline-danger"
-                onclick="filterProducts() "
-              >
-                اعمال فیلتر
-              </button>
-            </div>
-            <div class="p-4 mb-3 asidefilter">
-              <h4 class="h3 bchs">فیلتر برند</h4>
-              <button
-                class="btn btn-outline-danger"
-                onclick="//filterProducts() "
               >
                 اعمال فیلتر
               </button>
@@ -78,7 +62,8 @@
             <a href="#" id="defaultFilter"><span class="icon2">پیشفرض</span></a>
             <a href="#" id="lowPriceFilter"><span class="icon2">ارزان‌ترین</span></a>
             <a href="#" id="highPriceFilter"><span class="icon2">گران‌ترین</span></a>
-            <a href="#" id="defaultFilter"><span class="icon2">جدیدترین</span></a>
+            <a href="#" id="newFilter"><span class="icon2">جدیدترین</span></a>
+            <a href="#" id="oldFilter"><span class="icon2">قدیمی ترین</span></a>
           </div>
 
           <div id="PRODUCT" class="row">
