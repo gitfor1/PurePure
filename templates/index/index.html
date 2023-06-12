@@ -2,9 +2,7 @@
 {% load wagtailcore_tags %}
 {% block TITLE %}{{ page.title }}{% endblock %}
 {% block CONTENT %}
-{% include 'utils/header/header.html' %}
 {% for product in products %}
 {{ product.product_title }}
 {% endfor %}
-{% include 'utils/footer/footer.html' %}
 {% endblock %}

@@ -76,7 +76,7 @@ $(document).ready(function() {
         if (product.PRODUCT_SLIDE.length > 0) {
           for (var k = 0; k < product.PRODUCT_SLIDE.length; k++) {
             slideBTN += `<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${product.PRODUCT_SLIDE[k].id}" aria-label="${product.PRODUCT_SLIDE[k].slide_title}"></button>`;
-            slideimg += `<div class="carousel-item active"> <img src="${product.PRODUCT_SLIDE[k].image.url}" class="d-block w-100" alt="${product.PRODUCT_SLIDE[k].slide_title}"/> </div>`;
+            slideimg += `<div class="carousel-item active"> <img src="${product.PRODUCT_SLIDE[k].image.meta.download_url}" class="d-block w-100" alt="${product.PRODUCT_SLIDE[k].slide_title}"/> </div>`;
           }
         }
         // Start send context to html page
@@ -90,11 +90,11 @@ $(document).ready(function() {
             $('#slide_image').append(slideimg);
             $('#product_model_title').html(get_product_model_title);
             $('#product_model_cat').html(get_product_model_cat);
-            $('#product_short_desc').html(get_product_short_desc);
+            $('#product_short_desc').html(get_product_desc);
             $('#old_product_price').html(get_old_product_price);
             $('#product_price').html(get_product_price_by_offer);
             $('#color-select').html(colorSelect);
-            $('#product_desc').html(get_product_desc);
+            $('#product_desc').html(get_product_short_desc);
             $('#product_table').html(get_product_table);
             $('#product_is_available').html(`<h4 id="product_is_available" class="h4 mt-2 text-center">محصول در انبار موجود میباشد</h4>`);
           }else{
@@ -106,11 +106,11 @@ $(document).ready(function() {
             $('#slide_image').append(slideimg);
             $('#product_model_title').html(get_product_model_title);
             $('#product_model_cat').html(get_product_model_cat);
-            $('#product_short_desc').html(get_product_short_desc);
+            $('#product_short_desc').html(get_product_desc);
             $('#old_product_price').html(``);
             $('#product_price').html(get_product_price);
             $('#color-select').html(colorSelect);
-            $('#product_desc').html(get_product_desc);
+            $('#product_desc').html(get_product_short_desc);
             $('#product_table').html(get_product_table);
             $('#product_is_available').html(`<h4 id="product_is_available" class="h4 mt-2 text-center">محصول در انبار موجود میباشد</h4>`);
           }
@@ -124,11 +124,11 @@ $(document).ready(function() {
             $('#slide_image').append(slideimg);
             $('#product_model_title').html(get_product_model_title);
             $('#product_model_cat').html(get_product_model_cat);
-            $('#product_short_desc').html(get_product_short_desc);
+            $('#product_short_desc').html(get_product_desc);
             $('#old_product_price').html(get_old_product_price);
             $('#product_price').html(get_product_price_by_offer);
             $('#color-select').html(colorSelect);
-            $('#product_desc').html(get_product_desc);
+            $('#product_desc').html(get_product_short_desc);
             $('#product_table').html(get_product_table);
             $('#product_is_available').html(`<h4 id="product_is_available" class="h4 mt-2 text-center">محصول در انبار موجود نیست</h4>`);
           }else{
@@ -140,11 +140,11 @@ $(document).ready(function() {
             $('#slide_image').append(slideimg);
             $('#product_model_title').html(get_product_model_title);
             $('#product_model_cat').html(get_product_model_cat);
-            $('#product_short_desc').html(get_product_short_desc);
+            $('#product_short_desc').html(get_product_desc);
             $('#old_product_price').html(``);
             $('#product_price').html(get_product_price);
             $('#color-select').html(colorSelect);
-            $('#product_desc').html(get_product_desc);
+            $('#product_desc').html(get_product_short_desc);
             $('#product_table').html(get_product_table);
             $('#product_is_available').html(`<h4 id="product_is_available" class="h4 mt-2 text-center">محصول در انبار موجود نیست</h4>`);
           }
