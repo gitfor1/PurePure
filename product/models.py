@@ -52,6 +52,49 @@ class ProductChildPageSerializer(Field):
         ]
 
 
+class ProductSlide(Orderable):
+    ''' Product Color '''
+    product_slide = ParentalKey("product.InventoryItem", related_name="PRODUCT_SLIDE")
+    slide_title = models.CharField(max_length=14, verbose_name='عنوان اسلاید', db_index=True,)
+    image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=False, blank=False,
+        on_delete=models.PROTECT,
+        related_name='+',
+        verbose_name='تصویر اسلاید',
+        help_text='تصویر اسلاید را وارد نمایید',
+    )
+    slide_desc = models.CharField(max_length=35, verbose_name='توضیحات', null=True, blank=True)
+    collection = models.ForeignKey(
+        'wagtailcore.Collection',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        help_text='مجموعه برای رنگ بندی انتخاب کنید',
+    )
+
+    panels = [
+        FieldPanel('slide_title'),
+        NativeColorPanel('image'),
+        FieldPanel('slide_desc'),
+        FieldPanel('collection'),
+        ]
+
+    api_fields = [
+        APIField('slide_title'),
+        APIField('image'),
+        APIField('slide_desc'),
+        APIField('collection'),
+    ]
+
+    def __str__(self):
+        return self.color_title
+
+    class Meta:
+        verbose_name = 'اسلاید تصاویر محصول'
+        verbose_name_plural = 'اسلاید تصاویر محصول'
+
+
 class ProductColor(Orderable):
     ''' Product Color '''
     product_color = ParentalKey("product.InventoryItem", related_name="PRODUCT_COLORS")
@@ -220,7 +263,6 @@ class InventoryItem(RoutablePageMixin, Page):
         on_delete=models.SET_NULL,
         help_text='مجموعه برای محصول انتخاب کنید',
     )
-
     image = models.ForeignKey(
         'wagtailimages.Image',
         null=False, blank=False,
@@ -262,6 +304,9 @@ class InventoryItem(RoutablePageMixin, Page):
         FieldPanel('price'),
         FieldPanel('image'),
         MultiFieldPanel([
+            InlinePanel("PRODUCT_SLIDE"),
+        ], heading="انتخاب اسلاید تصاویر برای محصول"),
+        MultiFieldPanel([
             InlinePanel("PRODUCT_COLORS"),
         ], heading="انتخاب رنگ بندی محصول"),
         FieldPanel('quantity'),
@@ -292,6 +337,7 @@ class InventoryItem(RoutablePageMixin, Page):
         APIField('price'),
         APIField('short_description'),
         APIField('description'),
+        APIField('PRODUCT_SLIDE'),
         APIField('PRODUCT_COLORS'),
         APIField("product_type"),
         APIField("product_jense"),
@@ -382,6 +428,10 @@ class InventoryItem(RoutablePageMixin, Page):
         super().save(*args, **kwargs)
 
     save.short_description = 'ذخیره محصول'
+
+    class Meta:
+        verbose_name = 'محصول'
+        verbose_name_plural = 'محصولات'
 '''
     def get_colors(self):
         return ", ".join([color.name for color in self.colors.all()]) if self.colors.exists() else "محصول بدون رنگ بندی است"
