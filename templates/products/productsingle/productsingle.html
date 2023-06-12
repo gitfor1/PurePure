@@ -2,7 +2,6 @@
 {% load static %}
 {% load wagtailcore_tags %}
 {% block TITLE %}{{ page.title }}{% endblock %}
-{% block HEADING %}{% csrf_token %}{% endblock}
 {% block CSS %}
 <link rel="stylesheet" href="{% static 'css/product/productsingle/zoomy.css' %}" />
 {% endblock %}
