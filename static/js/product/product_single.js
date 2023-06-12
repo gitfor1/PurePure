@@ -76,7 +76,7 @@ $(document).ready(function() {
                         <div class="selected-color"></div>
                       </div>
                       <form method="POST" action="{% url 'add_to_cart' %}">
-                      {% csrf_token %}
+                      '{{ csrf_token }}'
                       <input type="hidden" name="product_id" value="${product.id}">
                       <input type="hidden" class="color-input" name="selected_color" value="">
                       <input type="number" name="quantity" value="1" min="1">
@@ -148,7 +148,7 @@ $(document).ready(function() {
                     <div class="selected-color" s></div>
                   </div>
                   <form method="POST" action="{% url 'add_to_cart' %}">
-                      {% csrf_token %}
+                      {{ csrf_token }}
                       <input type="hidden" name="product_id" value="${product.id}">
                       <input type="hidden" class="color-input" name="selected_color" value="">
                       <input type="number" name="quantity" value="1" min="1">
@@ -227,7 +227,7 @@ $(document).ready(function() {
                         <div class="selected-color"></div>
                       </div>
                       <form method="POST" action="{% url 'add_to_cart' %}">
-                      {% csrf_token %}
+                      {{ csrf_token }}
                       <input type="hidden" name="product_id" value="${product.id}">
                       <input type="hidden" class="color-input" name="selected_color" value="">
                       <input type="number" name="quantity" value="1" min="1">
@@ -296,7 +296,7 @@ $(document).ready(function() {
                     <div class="selected-color" s></div>
                   </div>
                   <form method="POST" action="{% url 'add_to_cart' %}">
-                      {% csrf_token %}
+                      {{ csrf_token }}
                       <input type="hidden" name="product_id" value="${product.id}">
                       <input type="hidden" class="color-input" name="selected_color" value="">
                       <input type="number" name="quantity" value="1" min="1">
@@ -380,7 +380,7 @@ $(document).ready(function() {
                         <div class="selected-color"></div>
                       </div>
                       <form method="POST" action="{% url 'add_to_cart' %}">
-                      {% csrf_token %}
+                      {{ csrf_token }}
                       <input type="hidden" name="product_id" value="${product.id}">
                       <input type="hidden" class="color-input" name="selected_color" value="">
                       <input type="number" name="quantity" value="1" min="1">
@@ -452,7 +452,7 @@ $(document).ready(function() {
                     <div class="selected-color" s></div>
                   </div>
                   <form method="POST" action="{% url 'add_to_cart' %}">
-                      {% csrf_token %}
+                      {{ csrf_token }}
                       <input type="hidden" name="product_id" value="${product.id}">
                       <input type="hidden" class="color-input" name="selected_color" value="">
                       <input type="number" name="quantity" value="1" min="1">
@@ -531,7 +531,7 @@ $(document).ready(function() {
                         <div class="selected-color"></div>
                       </div>
                       <form method="POST" action="{% url 'add_to_cart' %}">
-                      {% csrf_token %}
+                      {{ csrf_token }}
                       <input type="hidden" name="product_id" value="${product.id}">
                       <input type="hidden" class="color-input" name="selected_color" value="">
                       <input type="number" name="quantity" value="1" min="1">
@@ -600,7 +600,7 @@ $(document).ready(function() {
                     <div class="selected-color" s></div>
                   </div>
                   <form method="POST" action="{% url 'add_to_cart' %}">
-                      {% csrf_token %}
+                      {{ csrf_token }}
                       <input type="hidden" name="product_id" value="${product.id}">
                       <input type="hidden" class="color-input" name="selected_color" value="">
                       <input type="number" name="quantity" value="1" min="1">
@@ -633,5 +633,5 @@ $(document).ready(function() {
     });
     }
   )};
-
+  loadPages();
 });
