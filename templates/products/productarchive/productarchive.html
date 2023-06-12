@@ -75,11 +75,10 @@
         <section class="col-xxl-9 col-xl-9 col-lg-8 col-md-8 col-sm-12 col-12">
           <div class="sortpro">
             <span class="bi bi-sort-down"> مرتب سازی: </span>
-            <a href=""><span class="icon2">پیشفرض</span></a>
-            <a href=""><span class="icon2">پرفروش‌ترین‌</span></a>
-            <a href=""><span class="icon2">ارزان‌ترین</span></a>
-            <a href=""><span class="icon2">گران‌ترین</span></a>
-            <a href=""><span class="icon2">جدیدترین</span></a>
+            <a href="#" id="defaultFilter"><span class="icon2">پیشفرض</span></a>
+            <a href="#" id="lowPriceFilter"><span class="icon2">ارزان‌ترین</span></a>
+            <a href="#" id="highPriceFilter"><span class="icon2">گران‌ترین</span></a>
+            <a href="#" id="defaultFilter"><span class="icon2">جدیدترین</span></a>
           </div>
 
           <div id="PRODUCT" class="row">
@@ -93,89 +92,8 @@
       </div>
     </main>
 {% block JS %}
-<script>
-$(document).ready(function() {
-  var perPage = 8;
-  var page = 1;
-
-  function loadProducts() {
-    var startIndex = (page - 1) * perPage;
-    var endIndex = startIndex + perPage;
-
-    $.getJSON(`/UNIQUEAPI174/pages/?type=product.InventoryItem`, function(data) {
-      var product_item = data.items;
-      if (product_item.length > 0) {
-        totalPages = Math.ceil(product_item.length / perPage);
-
-        for (var i = startIndex; i < endIndex; i++) {
-          if (i >= product_item.length) {
-            break;
-          }
-          var productPage = product_item[i];
-          var productPageId = productPage.id;
-          var productPageSlug = productPage.meta.slug;
-          var productPostsAPIURL = `/UNIQUEAPI174/pages/${productPageId}`;
-          $.getJSON(productPostsAPIURL, function(productsData) {
-            var product = productsData;
-            if (product.PRODUCT_OFFER.length > 0) {
-              var postHTML = `
-                <div id="PRODUCT_BODY" class="cardpro" style="width: 18rem">
-                  <img src="${product.image.url}" class="card-img-top" alt="${product.image.alt}" />
-                  <div class="card-body">
-                    <h3 class="card-title h4">
-                      <a href="" class="black-color">${product.title}</a>
-                    </h3>
-                    <span class="text-decoration-line-through icon2">${product.price}</span>
-                    <span class="red-color">${product.PRODUCT_OFFER[0].value}<span>تومان</span></span>
-                    <hr />
-                    <div id="TOOLS" class="tolspro">
-                      <span class="bi bi-heart"></span>
-                      <span class="price"></span>
-                      <a href="${product.meta.html_url}"><button class="btn btn-danger addtocard" type="submit">مشاهده و خرید</button></a>
-                      <span class="bi bi-arrow-left-right"></span>
-                    </div>
-                  </div>
-                </div>
-              `;
-              $('#PRODUCT').append(postHTML);
-            } else {
-              var postHTML = `
-                <div id="PRODUCT_BODY" class="cardpro" style="width: 18rem">
-                  <img src="${product.image.url}" class="card-img-top" alt="${product.image.alt}" />
-                  <div class="card-body">
-                    <h3 class="card-title h4">
-                      <a href="" class="black-color">${product.title}</a>
-                    </h3>
-                    <span class="red-color">${product.price}<span>تومان</span></span>
-                    <hr />
-                    <div id="TOOLS" class="tolspro">
-                      <span class="bi bi-heart"></span>
-                      <span class="price"></span>
-                      <a href="${product.meta.html_url}"><button class="btn btn-danger addtocard" type="submit">مشاهده و خرید</button></a>
-                      <span class="bi bi-arrow-left-right"></span>
-                    </div>
-                  </div>
-                </div>
-              `;
-              $('#PRODUCT').append(postHTML);
-            }
-
-          });
-        }
-        if (page >= totalPages) {
-          $('#load-more').hide();
-        } else {
-          $('#load-more').show();
-        }
-
-        page++;
-      }
-    });
-  }
-
-  loadProducts();
-});
-</script>
+<script src="{% static 'js/product/product_archive.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
 <script
 src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"
 integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE"
@@ -186,6 +104,5 @@ src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.j
 integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ"
 crossorigin="anonymous"
 ></script>
-<script src="{% static 'js/main.js' %}"></script>
 {% endblock %}
 {% endblock %}

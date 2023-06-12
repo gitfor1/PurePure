@@ -25,79 +25,12 @@
       </div>
     </section>
 {% block JS %}
-<script>
-$(document).ready(function() {
-  var perPage = 10;
-  var page = 1;
-  function loadBlogPages() {
-    var startIndex = (page - 1) * perPage;
-    var endIndex = startIndex + perPage;
-
-    $.getJSON(`/UNIQUEAPI174/pages/?type=blog.BlogPage`, function(data) {
-      var blogPages = data.items;
-      if (blogPages.length > 0) {
-        totalPages = Math.ceil(blogPages.length / perPage);
-
-        for (var i = startIndex; i < endIndex; i++) {
-          if (i >= blogPages.length) {
-            break;
-          }
-
-          var blogPage = blogPages[i];
-          var blogPageId = blogPage.id;
-          var blogPageSlug = blogPage.meta.slug;
-          var blogPostsUrl = `/UNIQUEAPI174/pages/${blogPageId}`;
-
-          $.getJSON(blogPostsUrl, function(postsData) {
-            var post = postsData;
-            var postHTML = `
-                <div class="card" style="width: 18rem">
-                <img
-                  id="PostImage"
-                  src="${post.image.url}"
-                  class="card-img-top"
-                  alt="${post.image.alt}"/>
-                <div class="card-body">
-                  <h3 id="PostTitle" class="card-title h3">${post.title}</h3>
-
-                  <span id="PostAuthor" class="bi bi-person">${post.author}</span>
-                  <span id="PostCategory" class="bi bi-folder2-open">${post.collection}</span>
-                  <span id="PostPublish" class="bi bi-calendar3">${post.jpub}</span>
-
-                  <p id="PostIntro" class="card-text">
-                    ${post.intro}
-                  </p>
-                  <a id="PostSingle" href="${blogPageSlug}">مشاهده بیشتر</a>
-                </div>
-              </div>
-            `;
-
-            $('#blog_posts_archive').append(postHTML);
-          });
-        }
-
-        if (page >= totalPages) {
-          $('#load-more').hide();
-        } else {
-          $('#load-more').show();
-        }
-
-        page++;
-      } 
-    });
-  }
-  $('#load-more').click(function() {
-      loadBlogPages();
-    });
-
-    loadBlogPages();
-});
-</script>
+<script src="{static 'js/blog/blog_archive.js'}"></script>
+<script src="{% static 'js/main.js' %}"></script>
 <script
   src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"
   integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE"
   crossorigin="anonymous">
 </script>
-<script src="{% static 'js/main.js' %}"></script>
 {% endblock %}
 {% endblock %}
