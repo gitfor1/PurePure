@@ -59,87 +59,86 @@
     </main>
 {% block JS %}
 <script>
-  $(document).ready(function() {
-    function loadPages() {
-      var currentPath = window.location.pathname;
-      var slug = currentPath.split('/').filter(Boolean).pop();
-    $.getJSON(`/UNIQUEAPI174/pages/?slug=${slug}`, function(data) {
-      var blogPages = data.items[0];
-      $.getJSON(`/UNIQUEAPI174/pages/${blogPages.id}`, function(postsData) {
-        var post = postsData;
-        document.title = post.title;
-        var postHeaderContent = `<div class="h1divhead">
-          <h1 class="blogh1 white-color">${post.title}</h1> </div>`;
+$(document).ready(function() {
+  function loadPages() {
+    var currentPath = window.location.pathname;
+    var slug = currentPath.split('/').filter(Boolean).pop();
+  $.getJSON(`/UNIQUEAPI174/pages/?slug=${slug}`, function(data) {
+    var blogPages = data.items[0];
+    $.getJSON(`/UNIQUEAPI174/pages/${blogPages.id}`, function(postsData) {
+      var post = postsData;
+      document.title = post.title;
+      var postHeaderContent = `<div class="h1divhead">
+        <h1 class="blogh1 white-color">${post.title}</h1> </div>`;
 
-        var postPublicContent = `<li><a href="https://2020black.com" class="text-light-emphasis">2020 Black</a></li>
-          <li><a href="#" class="text-light-emphasis">${post.collection.title}</a></li>
-          <li><a href="#" class="text-light-emphasis">${post.title}</a></li>`;
+      var postPublicContent = `<li><a href="https://2020black.com" class="text-light-emphasis">2020 Black</a></li>
+        <li><a href="#" class="text-light-emphasis">${post.collection.title}</a></li>
+        <li><a href="#" class="text-light-emphasis">${post.title}</a></li>`;
 
-        var postContent = `<span class="bi bi-person">2020Black</span>
-              <span class="bi bi-folder2-open">${post.collection.title}</span>
-              <span class="bi bi-calendar3">${post.jpub}</span>`;
+      var postContent = `<span class="bi bi-person">2020Black</span>
+            <span class="bi bi-folder2-open">${post.collection.title}</span>
+            <span class="bi bi-calendar3">${post.jpub}</span>`;
 
-        var IMG1 = `<img
-              id="img1"
-              src="${post.image.url}"
-              alt="${post.image.alt}"
-              class="mainimgpost"
-            />`;
+      var IMG1 = `<img
+            id="img1"
+            src="${post.image.url}"
+            alt="${post.image.alt}"
+            class="mainimgpost"
+          />`;
 
-        var H1TITLE = `<h1 id="h1title" class="blog-post-title mb-1 h1">${post.title}</h1>`;
+      var H1TITLE = `<h1 id="h1title" class="blog-post-title mb-1 h1">${post.title}</h1>`;
 
-        var H2BODY = `<P id="h2body">${post.body}</P>`;
+      var H2BODY = `<P id="h2body">${post.body}</P>`;
 
-        $('#HEADER_CONTENT').append(postHeaderContent);
-        $('#POST_PUBLIC').append(postPublicContent);
-        $('#GOOD').append(postContent);
-        $('#img1').replaceWith(IMG1);
-        $('#h1title').replaceWith(H1TITLE);
-        $('#h2body').replaceWith(H2BODY);
-      });
+      $('#HEADER_CONTENT').append(postHeaderContent);
+      $('#POST_PUBLIC').append(postPublicContent);
+      $('#GOOD').append(postContent);
+      $('#img1').replaceWith(IMG1);
+      $('#h1title').replaceWith(H1TITLE);
+      $('#h2body').replaceWith(H2BODY);
+    });
+  }
+)};
+function loadNewPosts() {
+$.getJSON(`/UNIQUEAPI174/pages/?type=blog.BlogPage&order=-first_published_at`, function(data) {
+  console.log(data);
+  for (var i = 0; i < 5; i++) {
+    if (i >= data.items.length) {
+      break;
     }
-  )};
 
-    function loadNewPosts() {
-    $.getJSON(`/UNIQUEAPI174/pages/?type=blog.BlogPage&order=-first_published_at`, function(data) {
-      console.log(data);
-      for (var i = 0; i < 5; i++) {
-        if (i >= data.items.length) {
-          break;
-        }
-
-        var newPostsData = data.items[i];
-        var newPostsToPage = `<li class="bbs1px">
-          <a href="${newPostsData.meta.html_url}" class="black-color ahover">${newPostsData.title}</a></li>`;
-        $('#NEW_POSTS').append(newPostsToPage);
-      }
-    });
+    var newPostsData = data.items[i];
+    var newPostsToPage = `<li class="bbs1px">
+      <a href="${newPostsData.meta.html_url}" class="black-color ahover">${newPostsData.title}</a></li>`;
+    $('#NEW_POSTS').append(newPostsToPage);
   }
+});
+}
 
-    function loadPostsCategory() {
-    $.getJSON(`/UNIQUEAPI174/pages/?type=category.CategoryBlog&order=-first_published_at`, function(data) {
-      var totalChild = data.meta.total_count;
-      var categoryData = data.items;
+function loadPostsCategory() {
+$.getJSON(`/UNIQUEAPI174/pages/?type=category.CategoryBlog&order=-first_published_at`, function(data) {
+  var totalChild = data.meta.total_count;
+  var categoryData = data.items;
 
-      for (var i = 0; i < totalChild; i++) {
-        if (i >= totalChild) {
-          break;
-        }
-        var pageCategory = categoryData[i];
+  for (var i = 0; i < totalChild; i++) {
+    if (i >= totalChild) {
+      break;
+    }
+    var pageCategory = categoryData[i];
 
-        var category_to_pages = `<li class="bbs1px"> 
-          <a href="${pageCategory.meta.html_url}" class="black-color ahover">${pageCategory.title}</a> 
-          <span>${i}</span> </li>`;
-        $('#CATEGORY_ITEMS').append(category_to_pages);
-      }
-    });
+    var category_to_pages = `<li class="bbs1px"> 
+      <a href="${pageCategory.meta.html_url}" class="black-color ahover">${pageCategory.title}</a> 
+      <span>${i}</span> </li>`;
+    $('#CATEGORY_ITEMS').append(category_to_pages);
   }
+});
+}
 
-        
-        loadPages()
-        loadNewPosts();
-        loadPostsCategory()
-  });
+    
+    loadPages()
+    loadNewPosts();
+    loadPostsCategory()
+});
   </script>
     <script src="{% static 'js/blog/blogsingel.js' %}"></script>
     {% endblock %}
