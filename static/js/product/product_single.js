@@ -75,12 +75,10 @@ $(document).ready(function() {
                         ${colorSelect}
                         <div class="selected-color"></div>
                       </div>
-                      <form method="POST" action="{% url 'add_to_cart' %}">
                       <input type="hidden" name="product_id" value="${product.id}">
                       <input type="hidden" class="color-input" name="selected_color" value="">
                       <input type="number" name="quantity" value="1" min="1">
                       <button class="w-100 btn btn-danger addtocard" type="submit">افزودن به سبد خرید</button>
-                    </form>
                     </div>
                     <button
                       type="submit"
@@ -146,13 +144,10 @@ $(document).ready(function() {
                     ${colorSelect}
                     <div class="selected-color" s></div>
                   </div>
-                  <form method="POST" action="{% url 'add_to_cart' %}">
-                      
                       <input type="hidden" name="product_id" value="${product.id}">
                       <input type="hidden" class="color-input" name="selected_color" value="">
                       <input type="number" name="quantity" value="1" min="1">
                       <button class="w-100 btn btn-danger addtocard" type="submit">افزودن به سبد خرید</button>
-                    </form>
                 </div>
                 <button
                   type="submit"
@@ -225,13 +220,10 @@ $(document).ready(function() {
                         ${colorSelect}
                         <div class="selected-color"></div>
                       </div>
-                      <form method="POST" action="{% url 'add_to_cart' %}">
-                      
                       <input type="hidden" name="product_id" value="${product.id}">
                       <input type="hidden" class="color-input" name="selected_color" value="">
                       <input type="number" name="quantity" value="1" min="1">
                       <button class="w-100 btn btn-danger addtocard" type="submit">افزودن به سبد خرید</button>
-                    </form>
                     </div>
                     <button
                       type="submit"
@@ -294,13 +286,10 @@ $(document).ready(function() {
                     ${colorSelect}
                     <div class="selected-color" s></div>
                   </div>
-                  <form method="POST" action="{% url 'add_to_cart' %}">
-                      
                       <input type="hidden" name="product_id" value="${product.id}">
                       <input type="hidden" class="color-input" name="selected_color" value="">
                       <input type="number" name="quantity" value="1" min="1">
                       <button class="w-100 btn btn-danger addtocard" type="submit">افزودن به سبد خرید</button>
-                    </form>
                 </div>
                 <button
                   type="submit"
@@ -378,13 +367,10 @@ $(document).ready(function() {
                         ${colorSelect}
                         <div class="selected-color"></div>
                       </div>
-                      <form method="POST" action="{% url 'add_to_cart' %}">
-                      
                       <input type="hidden" name="product_id" value="${product.id}">
                       <input type="hidden" class="color-input" name="selected_color" value="">
                       <input type="number" name="quantity" value="1" min="1">
                       <button class="w-100 btn btn-danger addtocard" type="submit">افزودن به سبد خرید</button>
-                    </form>
                     </div>
                     <button
                       type="submit"
@@ -450,13 +436,10 @@ $(document).ready(function() {
                     ${colorSelect}
                     <div class="selected-color" s></div>
                   </div>
-                  <form method="POST" action="{% url 'add_to_cart' %}">
-                      
                       <input type="hidden" name="product_id" value="${product.id}">
                       <input type="hidden" class="color-input" name="selected_color" value="">
                       <input type="number" name="quantity" value="1" min="1">
                       <button class="w-100 btn btn-danger addtocard" type="submit">افزودن به سبد خرید</button>
-                    </form>
                 </div>
                 <button
                   type="submit"
@@ -529,13 +512,10 @@ $(document).ready(function() {
                         ${colorSelect}
                         <div class="selected-color"></div>
                       </div>
-                      <form method="POST" action="{% url 'add_to_cart' %}">
-                      
                       <input type="hidden" name="product_id" value="${product.id}">
                       <input type="hidden" class="color-input" name="selected_color" value="">
                       <input type="number" name="quantity" value="1" min="1">
                       <button class="w-100 btn btn-danger addtocard" type="submit">افزودن به سبد خرید</button>
-                    </form>
                     </div>
                     <button
                       type="submit"
@@ -598,13 +578,10 @@ $(document).ready(function() {
                     ${colorSelect}
                     <div class="selected-color" s></div>
                   </div>
-                  <form method="POST" action="{% url 'add_to_cart' %}">
-                      
                       <input type="hidden" name="product_id" value="${product.id}">
                       <input type="hidden" class="color-input" name="selected_color" value="">
                       <input type="number" name="quantity" value="1" min="1">
                       <button class="w-100 btn btn-danger addtocard" type="submit">افزودن به سبد خرید</button>
-                    </form>
                 </div>
                 <button
                   type="submit"
@@ -632,5 +609,7 @@ $(document).ready(function() {
     });
   }
 )};
-  loadPages();
+
+loadPages();
 });
+loadPages();

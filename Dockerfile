@@ -40,7 +40,7 @@ RUN python3 manage.py migrate
 RUN echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('09129585714', 'QUEADMINISTRATOR174%!AbfsbflbdbPSJAFISHF@UNIQUEDOMIN.com')" | python manage.py shell
 
 # Run tests
-#Run python3 manage.py collectstatic
+Run python3 manage.py collectstatic
 
 #RUN python manage.py test
 
