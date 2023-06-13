@@ -70,7 +70,7 @@ class UserAccountsForm(forms.ModelForm):
         model = user_accounts
         fields = [
             'email', 'username', 'WPOPass', 'first_name', 'last_name',
-            'address', 'address2', 'ostan', 'shahr', 'zip_code',
+            'address', 'address2', 'ostan', 'city', 'zip_code',
             'phoneNumber'
         ]
         widgets = {

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% black TITLE %}پنل کاربری{% endblock %}
+{% block TITLE %}پنل کاربری{% endblock %}
     <header class="headerblog">
       <div class="h1divhead">
         <h1 class="blogh1 white-color">پنل کاربری</h1>
@@ -13,9 +13,7 @@
             class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-4 col-12 mb-3"
           >
             <div class="dropdown text-center">
-              <span>سلام</span>
-              <strong> عباس دمرچیلو </strong>
-              <span>عزیز</span>
+              <span>خوش آمدید</span>
               <span class="bi bi-heart-fill text-danger"></span>
             </div>
             <hr />
@@ -331,6 +329,132 @@
                       placeholder="09121252336"
                       readonly
                     />
+                    <div class="valid-feedback">Looks good!</div>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="validationCustom04" class="form-label"
+                      >پست الکترونیک</label
+                    >
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="validationCustom04"
+                      required
+                    />
+                    <div class="invalid-feedback">
+                      Please provide a valid city.
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="validationCustom05" class="form-label"
+                      >استان</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="validationCustom05"
+                      required
+                    />
+                    <div class="invalid-feedback">
+                      Please provide a valid city.
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="validationCustom06" class="form-label"
+                      >شهر/ شهرستان</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="validationCustom06"
+                      required
+                    />
+                    <div class="invalid-feedback">
+                      Please provide a valid city.
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="validationCustom07" class="form-label"
+                      >رمزعبور فعلی</label
+                    >
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="validationCustom07"
+                    />
+                    <div class="invalid-feedback">
+                      Please provide a valid city.
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="validationCustom08" class="form-label"
+                      >رمزعبور جدید</label
+                    >
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="validationCustom08"
+                    />
+                    <div class="invalid-feedback">
+                      Please provide a valid city.
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="validationCustom09" class="form-label">
+                      تکرار رمزعبور جدید</label
+                    >
+
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="validationCustom09"
+                    />
+                    <div class="invalid-feedback">
+                      Please provide a valid city.
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <button class="btn red-b-color white-color" type="submit">
+                      بروزرسانی اطلاعات
+                    </button>
+                  </div>
+                </form>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="list-details"
+                role="tabpanel"
+                aria-labelledby="list-details-list"
+              >
+                <form class="row g-3 needs-validation" novalidate>
+                  <div class="col-md-4">
+                    <label for="validationCustom01" class="form-label"
+                      >نام
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="validationCustom01"
+                      required
+                    />
+                    <div class="valid-feedback">Looks good!</div>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="validationCustom02" class="form-label"
+                      >نام خانوادگی
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="validationCustom02"
+                      required
+                    />
+                    <div class="valid-feedback">Looks good!</div>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="validationCustom03" class="form-label">
+                      شماره تماس
+                    </label>
                     <div class="valid-feedback">Looks good!</div>
                   </div>
                   <div class="col-md-4">

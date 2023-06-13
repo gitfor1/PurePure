@@ -15,8 +15,12 @@ from django.views import View
 
 @login_required
 def dashboardView(request):
-    form = UserAccountsForm(instance=user)
-    return render(request, 'accounts/dashboard.html', {'form': form})
+    if request.method == 'POST':
+        form = UserAccountsForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('dashboardView')
+    return render(request, 'accounts/dashboard.html',)
 
 
 @login_required
