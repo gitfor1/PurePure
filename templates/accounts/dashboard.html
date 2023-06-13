@@ -1,0 +1,540 @@
+{% extends 'base.html' %}
+{% load static %}
+{% black TITLE %}پنل کاربری{% endblock %}
+    <header class="headerblog">
+      <div class="h1divhead">
+        <h1 class="blogh1 white-color">پنل کاربری</h1>
+      </div>
+    </header>
+    <div class="container-fluid">
+      <section>
+        <div class="row">
+          <div
+            class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-4 col-12 mb-3"
+          >
+            <div class="dropdown text-center">
+              <span>سلام</span>
+              <strong> عباس دمرچیلو </strong>
+              <span>عزیز</span>
+              <span class="bi bi-heart-fill text-danger"></span>
+            </div>
+            <hr />
+            <div class="list-group" id="list-tab" role="tablist">
+              <a
+                class="list-group-item list-group-item-action active"
+                id="list-counter-list"
+                data-bs-toggle="list"
+                href="#list-counter"
+                role="tab"
+                aria-controls="list-counter"
+                >پیشخوان</a
+              >
+              <a
+                class="list-group-item list-group-item-action"
+                id="list-orders-list"
+                data-bs-toggle="list"
+                href="#list-orders"
+                role="tab"
+                aria-controls="list-orders"
+                >سفارش ها</a
+              >
+              <a
+                class="list-group-item list-group-item-action"
+                id="list-addresses-list"
+                data-bs-toggle="list"
+                href="#list-addresses"
+                role="tab"
+                aria-controls="list-addresses"
+                >آدرس ها</a
+              >
+              <a
+                class="list-group-item list-group-item-action"
+                id="list-details-list"
+                data-bs-toggle="list"
+                href="#list-details"
+                role="tab"
+                aria-controls="list-details"
+                >جزئیات حساب</a
+              >
+              <a
+                class="list-group-item list-group-item-action"
+                id="list-favorites1-list"
+                data-bs-toggle="list"
+                href="#list-favorites1"
+                role="tab"
+                aria-controls="list-favorites1"
+                >علاقه مندی ها</a
+              >
+              <a
+                href="{% url 'logout' %}"
+                class="nav-link link-body-emphasis text-danger list-group-item"
+              >
+                خروج
+              </a>
+            </div>
+          </div>
+
+          <div class="col-xxl-9 col-xl-9 col-lg-9 col-md-9 col-sm-8 col-12">
+            <div class="tab-content" id="nav-tabContent">
+              <div
+                class="tab-pane fade show active"
+                id="list-counter"
+                role="tabpanel"
+                aria-labelledby="list-counter-list"
+              >
+                <div class="row">
+                  <div class="boxpanel">
+                    <a href="" class="link-body-emphasis">
+                      <span class="bi bi-cart-check"> </span>
+                      <h3 class="h5">سفارش ها</h3>
+                    </a>
+                  </div>
+                  <div class="boxpanel">
+                    <a href="" class="link-body-emphasis">
+                      <span class="bi bi-geo-alt"> </span>
+                      <h3 class="h5">آدرس ها</h3>
+                    </a>
+                  </div>
+                  <div class="boxpanel">
+                    <a href="" class="link-body-emphasis">
+                      <span class="bi bi-heart"> </span>
+                      <h3 class="h5">علاقه مندی ها</h3>
+                    </a>
+                  </div>
+                  <div class="boxpanel">
+                    <a href="" class="link-body-emphasis">
+                      <span class="bi bi-basket"> </span>
+                      <h3 class="h5">فروشگاه</h3>
+                    </a>
+                  </div>
+                  <div class="boxpanel">
+                    <a href="" class="link-body-emphasis">
+                      <span class="bi bi-journal-bookmark"> </span>
+                      <h3 class="h5">وبلاگ</h3>
+                    </a>
+                  </div>
+                  <div class="boxpanel">
+                    <a href="{% url 'logout' %}" class="link-body-emphasis">
+                      <span class="bi bi-box-arrow-left"> </span>
+                      <h3 class="h5">خروج</h3>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="list-orders"
+                role="tabpanel"
+                aria-labelledby="list-orders-list"
+              >
+                <!-- <div class="row">
+
+                </div> -->
+                <div class="bd-example-snippet bd-code-snippet text-center">
+                  <div class="bd-example m-0 border-0">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">محصول</th>
+                          <th scope="col">تعداد</th>
+                          <th scope="col">رنگ</th>
+                          <th scope="col">تاریخ ثبت</th>
+                          <th scope="col">وضعیت پرداخت</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th scope="row">1</th>
+                          <td>کیف چرمی جنس ترک</td>
+                          <td>2</td>
+                          <td>مشکی</td>
+                          <td>1402/03/30</td>
+                          <td>تکمیل شده</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">2</th>
+                          <td>کیف چرمی جنس ترک</td>
+                          <td>5</td>
+                          <td>قرمز</td>
+                          <td>1402/03/30</td>
+                          <td>تکمیل شده</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="list-addresses"
+                role="tabpanel"
+                aria-labelledby="list-addresses-list"
+              >
+                <h4 class="mb-3">آدرس خود را وارد کنید</h4>
+                <form class="needs-validation" novalidate="">
+                  <div class="row g-3">
+                    <div class="col-sm-6">
+                      <label for="firstName" class="form-label">نام</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="firstName"
+                        required
+                      />
+                      <div div class="invalid-feedback">
+                        يرجى إدخال اسم أول صحيح.
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <label for="lastName" class="form-label"
+                        >نام خانوادگی</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="lastName"
+                        required
+                      />
+                      <div class="invalid-feedback">
+                        يرجى إدخال اسم عائلة صحيح.
+                      </div>
+                    </div>
+
+                    <div class="col-6">
+                      <label for="telnum" class="form-label">شماره تماس</label>
+                      <div class="input-group has-validation">
+                        <span class="input-group-text">+98</span>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="telnum"
+                          required
+                        />
+                        <div class="invalid-feedback">
+                          اسم المستخدم الخاص بك مطلوب.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <label for="email" class="form-label">
+                        پست الکترونیک
+                        <span class="text-body-secondary"
+                          >(اختياري)</span
+                        ></label
+                      >
+                      <input type="email" class="form-control" id="email" />
+                      <div class="invalid-feedback">
+                        يرجى إدخال عنوان بريد إلكتروني صحيح لتصلكم تحديثات
+                        الشحن.
+                      </div>
+                    </div>
+
+                    <div class="col-6">
+                      <label for="address" class="form-label">آدرس دقیق</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="address"
+                        required
+                      />
+                      <div class="invalid-feedback">
+                        يرجى إدخال عنوان الشحن الخاص بك.
+                      </div>
+                    </div>
+
+                    <div class="col-6">
+                      <label for="address2" class="form-label">
+                        زنگ ، پلاک
+                        <span class="text-body-secondary"
+                          >(اختياري)</span
+                        ></label
+                      >
+                      <input type="text" class="form-control" id="address2" />
+                    </div>
+
+                    <div class="col-md-5">
+                      <label for="ostan" class="form-label">استان</label>
+                      <input type="text" class="form-control" id="ostan" />
+                      <div class="invalid-feedback">يرجى اختيار بلد صحيح.</div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <label for="shahr" class="form-label">شهر/شهرستان</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="shahr"
+                        required
+                      />
+                      <div class="invalid-feedback">
+                        يرجى اختيار اسم منطقة صحيح.
+                      </div>
+                    </div>
+
+                    <div class="col-md-3">
+                      <label for="zip" class="form-label">کدپستی</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="zip"
+                        required
+                      />
+                      <div class="invalid-feedback">الرمز البريدي مطلوب.</div>
+                    </div>
+                  </div>
+                  <br />
+                  <button class="btn red-b-color white-color" type="submit">
+                    بروزرسانی اطلاعات
+                  </button>
+                </form>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="list-details"
+                role="tabpanel"
+                aria-labelledby="list-details-list"
+              >
+                <form class="row g-3 needs-validation" novalidate>
+                  <div class="col-md-4">
+                    <label for="validationCustom01" class="form-label"
+                      >نام
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="validationCustom01"
+                      required
+                    />
+                    <div class="valid-feedback">Looks good!</div>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="validationCustom02" class="form-label"
+                      >نام خانوادگی
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="validationCustom02"
+                      required
+                    />
+                    <div class="valid-feedback">Looks good!</div>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="validationCustom03" class="form-label">
+                      شماره تماس
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="validationCustom03"
+                      placeholder="09121252336"
+                      readonly
+                    />
+                    <div class="valid-feedback">Looks good!</div>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="validationCustom04" class="form-label"
+                      >پست الکترونیک</label
+                    >
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="validationCustom04"
+                      required
+                    />
+                    <div class="invalid-feedback">
+                      Please provide a valid city.
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="validationCustom05" class="form-label"
+                      >استان</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="validationCustom05"
+                      required
+                    />
+                    <div class="invalid-feedback">
+                      Please provide a valid city.
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="validationCustom06" class="form-label"
+                      >شهر/ شهرستان</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="validationCustom06"
+                      required
+                    />
+                    <div class="invalid-feedback">
+                      Please provide a valid city.
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="validationCustom07" class="form-label"
+                      >رمزعبور فعلی</label
+                    >
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="validationCustom07"
+                    />
+                    <div class="invalid-feedback">
+                      Please provide a valid city.
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="validationCustom08" class="form-label"
+                      >رمزعبور جدید</label
+                    >
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="validationCustom08"
+                    />
+                    <div class="invalid-feedback">
+                      Please provide a valid city.
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="validationCustom09" class="form-label">
+                      تکرار رمزعبور جدید</label
+                    >
+
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="validationCustom09"
+                    />
+                    <div class="invalid-feedback">
+                      Please provide a valid city.
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <button class="btn red-b-color white-color" type="submit">
+                      بروزرسانی اطلاعات
+                    </button>
+                  </div>
+                </form>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="list-favorites1"
+                role="tabpanel"
+                aria-labelledby="list-favorites1-list"
+              >
+                <div class="row">
+                  <div class="cardpro" style="width: 18rem">
+                    <img
+                      src="/img/اسلایدمحصول1.jpg"
+                      class="card-img-top"
+                      alt="..."
+                    />
+                    <div class="card-body">
+                      <h3 class="card-title h4">
+                        <a href="" class="black-color">مقاله شماره یک</a>
+                      </h3>
+                      <span class="text-decoration-line-through icon2"
+                        >300.000</span
+                      >
+                      <span class="red-color">200.000 <span>تومان</span></span>
+                      <hr />
+                      <div class="tolspro">
+                        <span class="bi bi-heart"></span>
+                        <button type="submit" class="btn btn-danger addtocard">
+                          افزودن به سبد خرید
+                        </button>
+                        <span class="bi bi-arrow-left-right"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="cardpro" style="width: 18rem">
+                    <img
+                      src="/img/اسلایدمحصول1.jpg"
+                      class="card-img-top"
+                      alt="..."
+                    />
+                    <div class="card-body">
+                      <h3 class="card-title h4">
+                        <a href="" class="black-color">مقاله شماره یک</a>
+                      </h3>
+                      <span class="text-decoration-line-through icon2"
+                        >300.000</span
+                      >
+                      <span class="red-color">200.000 <span>تومان</span></span>
+                      <hr />
+                      <div class="tolspro">
+                        <span class="bi bi-heart"></span>
+                        <button type="submit" class="btn btn-danger addtocard">
+                          افزودن به سبد خرید
+                        </button>
+                        <span class="bi bi-arrow-left-right"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="cardpro" style="width: 18rem">
+                    <img
+                      src="/img/اسلایدمحصول1.jpg"
+                      class="card-img-top"
+                      alt="..."
+                    />
+                    <div class="card-body">
+                      <h3 class="card-title h4">
+                        <a href="" class="black-color">مقاله شماره یک</a>
+                      </h3>
+                      <span class="text-decoration-line-through icon2"
+                        >300.000</span
+                      >
+                      <span class="red-color">200.000 <span>تومان</span></span>
+                      <hr />
+                      <div class="tolspro">
+                        <span class="bi bi-heart"></span>
+                        <button type="submit" class="btn btn-danger addtocard">
+                          افزودن به سبد خرید
+                        </button>
+                        <span class="bi bi-arrow-left-right"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="cardpro" style="width: 18rem">
+                    <img
+                      src="/img/اسلایدمحصول1.jpg"
+                      class="card-img-top"
+                      alt="..."
+                    />
+                    <div class="card-body">
+                      <h3 class="card-title h4">
+                        <a href="" class="black-color">مقاله شماره یک</a>
+                      </h3>
+                      <span class="text-decoration-line-through icon2"
+                        >300.000</span
+                      >
+                      <span class="red-color">200.000 <span>تومان</span></span>
+                      <hr />
+                      <div class="tolspro">
+                        <span class="bi bi-heart"></span>
+                        <button type="submit" class="btn btn-danger addtocard">
+                          افزودن به سبد خرید
+                        </button>
+                        <span class="bi bi-arrow-left-right"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <script src="{% static 'js/accounts/dashboard.js' %}"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>

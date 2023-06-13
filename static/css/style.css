@@ -14,6 +14,7 @@
 @import url("util/footer/footer3.css");
 
 @import url("accounts/stylelogin.css");
+@import url("accounts/dashboard.css");
 
 @import url("product/productarchive/productarchive.css");
 @import url("product/productsingle/productsingle.css");

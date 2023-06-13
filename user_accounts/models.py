@@ -33,14 +33,20 @@ class user_accounts(AbstractBaseUser, PermissionsMixin):
     email = models.CharField(db_column='email',max_length=120, unique=True, null=True)
     username = models.CharField(db_column='username',max_length=120, unique=True, null=True)
     WPOPass = models.CharField(db_column='WPOPass',max_length=100, default=False, null=True)
-    full_name = models.CharField(db_column='full_name',max_length=255, null=True)
+    first_name = models.CharField(max_length=100, blank=True, null=True)
+    last_name = models.CharField(max_length=100, blank=True, null=True)
+    address = models.CharField(max_length=200, blank=True, null=True)
+    address2 = models.CharField(max_length=200,blank=True, null=True)
+    ostan = models.CharField(max_length=100,blank=True, null=True)
+    shahr = models.CharField(max_length=100,blank=True, null=True)
+    zip_code = models.CharField(max_length=10)
     phoneNumber = models.CharField(db_column='phoneNumber', max_length=20, unique=True)
     is_active = models.BooleanField(db_column='is_active',default=True)
     is_staff = models.BooleanField(db_column='is_staff',default=False)
     date_joined = forms.DateTimeField(
         label='Date Joined',
         widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}),
-        disabled=True  # تنظیم فیلد به صورت غیرفعال
+        disabled=True  
     )
     last_login = models.DateTimeField(db_column='last_login',auto_now_add=True)
     has_new_password = models.BooleanField(db_column='has_new_password',default=True)

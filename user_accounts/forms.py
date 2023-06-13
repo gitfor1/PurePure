@@ -65,6 +65,18 @@ class CustomUserCreationForm(forms.ModelForm):
         return user
 
 
+class UserAccountsForm(forms.ModelForm):
+    class Meta:
+        model = user_accounts
+        fields = [
+            'email', 'username', 'WPOPass', 'first_name', 'last_name',
+            'address', 'address2', 'ostan', 'shahr', 'zip_code',
+            'phoneNumber'
+        ]
+        widgets = {
+            'date_joined': forms.DateTimeInput(attrs={'type': 'datetime-local', 'disabled': True}),
+        }
+
 # Custom User authentication Form class
 class LoginForm(AuthenticationForm):
     username = UsernameField(
