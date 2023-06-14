@@ -319,10 +319,10 @@ class InventoryItem(RoutablePageMixin, Page):
         FieldPanel('price'),
         FieldPanel('image'),
         MultiFieldPanel([
-            InlinePanel("PRODUCT_SLIDE"),
+            InlinePanel("PRODUCT_SLIDE", max_num=5, label="تصویر محصول"),
         ], heading="انتخاب اسلاید تصاویر برای محصول"),
         MultiFieldPanel([
-            InlinePanel("PRODUCT_COLORS", max_num=5, label="تصویر محصول"),
+            InlinePanel("PRODUCT_COLORS", label="رنگ بندی محصول"),
         ], heading="انتخاب رنگ بندی محصول"),
         FieldPanel('quantity'),
         FieldPanel('short_description'),
