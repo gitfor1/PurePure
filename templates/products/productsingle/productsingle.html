@@ -32,47 +32,7 @@
           <div
             class="col-xxl-7 col-xl-7 col-lg-12 col-md-12 col-sm-12 col-12"
           >
-            <!-- ===== -->
-            <div id="carouselExampleIndicators" class="carousel slide">
-              <div id="slide_btn" class="carousel-indicators">
-                <button
-                  id="btn_slide_one"
-                  type="button"
-                  data-bs-target="#carouselExampleIndicators"
-                  data-bs-slide-to="0"
-                  class="active"
-                  aria-current="true"
-                  aria-label="Slide 1"
-                ></button>
-              </div>
-              <div id="slide_image" class="carousel-inner">
-              </div>
-              <button
-                class="carousel-control-prev"
-                type="button"
-                data-bs-target="#carouselExampleIndicators"
-                data-bs-slide="prev"
-              >
-                <span
-                  class="carousel-control-prev-icon"
-                  aria-hidden="true"
-                ></span>
-                <span class="visually-hidden">Previous</span>
-              </button>
-              <button
-                class="carousel-control-next"
-                type="button"
-                data-bs-target="#carouselExampleIndicators"
-                data-bs-slide="next"
-              >
-                <span
-                  class="carousel-control-next-icon"
-                  aria-hidden="true"
-                ></span>
-                <span class="visually-hidden">Next</span>
-              </button>
-            </div>
-            <!-- ===== -->
+            <div id="gpro"></div>
           </div>
           <div
             class="col-xxl-5 col-xl-5 col-lg-12 col-md-12 col-sm-12 col-12"
@@ -82,9 +42,14 @@
               <span class="bi bi-folder2-open"
                 ><a id="product_model_cat" href="">دسته بندی اصلی</a></span
               >
+
             </div>
-            <p id="product_short_desc"></p>
-            <!-- ================= -->
+            <p id="product_short_desc">
+              لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و
+              با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه زمان مورد
+              نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته
+              اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
+            </p>
             <div class="container text-center">
               <div class="row text-start">
                 <div class="col">
@@ -103,6 +68,50 @@
                     خرید به صورت قسطی
                   </span>
                 </div>
+              </div>
+              <div class="mt-3 proasidecatrec">
+                <h4 class="h3 bchs">خرید و پرداخت آنلاین</h4>
+                <div class="text-center">
+                  <span id="old_product_price" class="h4 text-decoration-line-through icon2"
+                    >290.000 تومان</span
+                  ><br />
+                  <span id="product_price" class="h1">200.000 تومان</span><br />
+                  <span
+                    class="decrement cursor bi bi-dash-square-fill red-color"
+                  ></span>
+                  <span class="count">1</span>
+                  <span
+                    class="increment cursor bi bi-plus-square-fill red-color"
+                  ></span>
+                  <div class="color-picker">
+                    <div class="row"></div>
+                    <select id="color-select">
+                      <option value="">انتخاب رنگ</option>
+                    </select>
+                    <div class="selected-color"></div>
+                  </div>
+                  <button
+                    type="submit"
+                    class="w-100 btn btn-danger addtocard"
+                  >
+                    افزودن به سبد خرید
+                  </button>
+                </div>
+                <button
+                  type="submit"
+                  class="w-100 bi bi-arrow-left-right mt-2 btn btn-outline-danger"
+                >
+                  مقایسه محصول
+                </button>
+                <button
+                  type="submit"
+                  class="bi bi-heart w-100 mt-2 btn btn-outline-danger"
+                >
+                  علاقه مندی
+                </button>
+                <h4 id="product_is_available" class="h4 mt-2 text-center">
+                  محصول در انبار موجود میباشد
+                </h4>
               </div>
             </div>
           </div>

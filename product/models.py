@@ -232,6 +232,20 @@ class Discount(models.Model):
     code = models.CharField(max_length=50, unique=True)
     dis_type = models.CharField(max_length=20, choices=DISCOUNT_TYPES)
     value = models.DecimalField(max_digits=10, decimal_places=2)
+    product = models.ForeignKey(
+        'product.InventoryItem',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        help_text='انتخاب محصول برای اعمال کد تخفیف',
+    )
+    collection = models.ForeignKey(
+        'category.CategoryProduct',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        help_text='انتخاب دسته بندی برای اعمال کد تخفیف',
+    )
     start_date = models.DateField()
     end_date = models.DateField()
 
@@ -356,16 +370,6 @@ class InventoryItem(RoutablePageMixin, Page):
     def get_child_pages(self):
         return self.get_children().public().live()
 
-    #@property
-    #def total_visits(self):
-        #return self.productvisit_set.aggregate(total=models.Sum('visit'))['total'] or 0
-
-    #@staticmethod
-    #def top_sales_products(limit=5):
-        #return Product.objects.annotate(total_sales=models.Sum('sales__quantity')).order_by('-total_sales')[:limit]
-
-    #top_sales_products.short_description = 'پر فروش ترین محصولات'
-
     def apply_discount(self, discount_code):
         try:
             discount = Discount.objects.get(code=discount_code)
@@ -432,104 +436,7 @@ class InventoryItem(RoutablePageMixin, Page):
     class Meta:
         verbose_name = 'محصول'
         verbose_name_plural = 'محصولات'
-'''
-    def get_colors(self):
-        return ", ".join([color.name for color in self.colors.all()]) if self.colors.exists() else "محصول بدون رنگ بندی است"
-
-    get_colors.short_description = 'رنگ بندی محصول'
-
-    def get_product_quantity(self):
-        return self.quantity
-
-    def get_product_total_sales(self):
-        return self.invoiceitem_set.aggregate(Sum('quantity'))['quantity__sum'] or 0
-
-    def get_product_total_visits(self):
-        return self.productvisit_set.count()
-
-    def get_product_sales_by_date(self, start_date, end_date):
-        sales = self.invoiceitem_set.filter(
-            invoice__date__range=[start_date, end_date]
-        ).values_list('quantity', flat=True)
-        return list(sales)
-
-    def get_product_sales_mean(self, start_date, end_date):
-        sales = self.invoiceitem_set.filter(
-            invoice__date__range=[start_date, end_date]
-        ).values_list('quantity', flat=True)
-        mean_sales = pd.Series(sales).mean()
-        return mean_sales
-
-    def get_product_sales_variance(self, start_date, end_date):
-        sales = self.invoiceitem_set.filter(
-            invoice__date__range=[start_date, end_date]
-        ).values_list('quantity', flat=True)
-        variance_sales = pd.Series(sales).var()
-        return variance_sales
-
-    def get_product_sales_std(self, start_date, end_date):
-        sales = self.invoiceitem_set.filter(
-            invoice__date__range=[start_date, end_date]
-        ).values_list('quantity', flat=True)
-        std_sales = pd.Series(sales).std()
-        return std_sales
-
-    def get_product_sales_quartiles(self, start_date, end_date):
-        sales = self.invoiceitem_set.filter(
-            invoice__date__range=[start_date, end_date]
-        ).values_list('quantity', flat=True)
-        quartiles = pd.Series(sales).quantile([0.25, 0.5, 0.75])
-        return quartiles.tolist()
-
-    def get_product_balance_distribution(self):
-        try:
-            total_inventory = self.inventoryitem_set.aggregate(Sum('quantity'))['quantity__sum']
-            balance_distribution = {}
-            for item in self.inventoryitem_set.all():
-                balance_distribution[item.product.name] = item.quantity / total_inventory
-            return balance_distribution
-        except InventoryItem.DoesNotExist:
-            return {}
-
-'''
-'''
-class ProductVisit(models.Model):
-    product = models.ForeignKey(InventoryItem, on_delete=models.CASCADE, verbose_name='محصول')
-    ip_address = models.CharField(max_length=30, verbose_name='آی پی کاربر')
-    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL,)
-    timestamp = models.DateTimeField(default=timezone.now, verbose_name='زمانبندی بازدید')
-
-    class Meta:
-        verbose_name = 'بازدید کالا'
-        verbose_name_plural = 'بازدیدهای محصولات'
-
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.timestamp = timezone.now()
-        super().save(*args, **kwargs)
-
-    save.short_description = 'ذخیره بازدید محصول'
-
-
-class PopularProduct(models.Model):
-    product_visited = models.ForeignKey(InventoryItem, on_delete=models.CASCADE)
-    total_visit = models.IntegerField(verbose_name='تعداد کل بازدید', default=0)
-
-    class Meta:
-        verbose_name = 'محصول محبوب'
-        verbose_name_plural = 'محصولات محبوب'
-
-    @classmethod
-    def update_popularity(cls):
-        popular_products = cls.objects.all().order_by('-total_visit')[:5]
-        # بروزرسانی لیست محصولات محبوب
-
-    def save(self, *args, **kwargs):
-        self.total_visit = self.product_visited.productvisit_set.count()
-        super().save(*args, **kwargs)
-
-    save.short_description = 'مجموع بازدیدهای محصول'
-'''
+        
 
 class Inventory(models.Model):
     products = models.ForeignKey(InventoryItem, blank=True, null=True, on_delete=SET_NULL)
