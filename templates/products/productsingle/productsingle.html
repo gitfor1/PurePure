@@ -69,51 +69,6 @@
                   </span>
                 </div>
               </div>
-              <div class="mt-3 proasidecatrec">
-                <h4 class="h3 bchs">خرید و پرداخت آنلاین</h4>
-                <div class="text-center">
-                  <span id="old_product_price" class="h4 text-decoration-line-through icon2"
-                    >290.000 تومان</span
-                  ><br />
-                  <span id="product_price" class="h1">200.000 تومان</span><br />
-                  <span
-                    class="decrement cursor bi bi-dash-square-fill red-color"
-                  ></span>
-                  <span class="count">1</span>
-                  <span
-                    class="increment cursor bi bi-plus-square-fill red-color"
-                  ></span>
-                  <div class="color-picker">
-                    <div class="row"></div>
-                    <select id="color-select">
-                      <option value="">انتخاب رنگ</option>
-                    </select>
-                    <div class="selected-color"></div>
-                  </div>
-                  <form method="POST" action="{% url 'add_to_cart' %}">
-                    {% csrf_token %}
-                    <input id="add_to_cart_product" type="hidden" name="product_id" value="${productPageId}">
-                    <input id="add_to_cart_color" type="hidden" class="color-input" name="selected_color" value="">
-                    <input id="add_to_cart_quantity" type="number" name="quantity" value="1" min="1">
-                    <button id="add_cart_btn" class="w-100 btn btn-danger addtocard" type="submit">افزودن به سبد خرید</button>
-                  </form>
-                </div>
-                <button
-                  type="submit"
-                  class="w-100 bi bi-arrow-left-right mt-2 btn btn-outline-danger"
-                >
-                  مقایسه محصول
-                </button>
-                <button
-                  type="submit"
-                  class="bi bi-heart w-100 mt-2 btn btn-outline-danger"
-                >
-                  علاقه مندی
-                </button>
-                <h4 id="product_is_available" class="h4 mt-2 text-center">
-                  محصول در انبار موجود میباشد
-                </h4>
-              </div>
             </div>
           </div>
         </div>
@@ -201,7 +156,7 @@
               {% csrf_token %}
               <input id="add_to_cart_product" type="hidden" name="product_id" value="${productPageId}">
               <input id="add_to_cart_color" type="hidden" class="color-input" name="selected_color" value="">
-              <input id="add_to_cart_quantity" type="number" name="quantity" value="1" min="1">
+              <input id="add_to_cart_quantity" type="hidden" name="quantity" value="1" min="1">
               <button id="add_cart_btn" class="w-100 btn btn-danger addtocard" type="submit">افزودن به سبد خرید</button>
             </form>
           </div>

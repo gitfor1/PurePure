@@ -10,6 +10,9 @@ $(document).ready(function() {
     var slug = currentPath.split('/').filter(Boolean).pop();
     $.getJSON(`/UNIQUEAPI174/pages/?slug=${slug}`, function(data) {
       var productPages = data.items[0];
+        // set product id
+      let get_add_product_id = `<input id="add_to_cart_product" type="hidden" name="product_id" value="${productPages.id}"></input>`;
+      $('#add_to_cart_product').html(get_add_product_id);
       $.getJSON(`/UNIQUEAPI174/pages/${productPages.id}`, function(Data) {
         let product = Data;
         document.title = product.title;
@@ -96,11 +99,11 @@ $(document).ready(function() {
             $('#slide_image').append(slideimg);
             $('#product_model_title').html(get_product_model_title);
             $('#product_model_cat').html(get_product_model_cat);
-            $('#product_short_desc').html(get_product_desc);
+            $('#product_short_desc').html(get_product_short_desc);
             $('#old_product_price').html(get_old_product_price);
             $('#product_price').html(get_product_price_by_offer);
             $('#color-select').html(colorSelect);
-            $('#product_desc').html(get_product_short_desc);
+            $('#product_desc').html(get_product_desc);
             $('#product_table').html(get_product_table);
             $('#product_is_available').html(`<h4 id="product_is_available" class="h4 mt-2 text-center">محصول در انبار موجود میباشد</h4>`);
           }else{
@@ -112,11 +115,11 @@ $(document).ready(function() {
             $('#slide_image').append(slideimg);
             $('#product_model_title').html(get_product_model_title);
             $('#product_model_cat').html(get_product_model_cat);
-            $('#product_short_desc').html(get_product_desc);
+            $('#product_short_desc').html(get_product_short_desc);
             $('#old_product_price').html(``);
             $('#product_price').html(get_product_price);
             $('#color-select').html(colorSelect);
-            $('#product_desc').html(get_product_short_desc);
+            $('#product_desc').html(get_product_desc);
             $('#product_table').html(get_product_table);
             $('#product_is_available').html(`<h4 id="product_is_available" class="h4 mt-2 text-center">محصول در انبار موجود میباشد</h4>`);
           }
@@ -130,11 +133,11 @@ $(document).ready(function() {
             $('#slide_image').append(slideimg);
             $('#product_model_title').html(get_product_model_title);
             $('#product_model_cat').html(get_product_model_cat);
-            $('#product_short_desc').html(get_product_desc);
+            $('#product_short_desc').html(get_product_short_desc);
             $('#old_product_price').html(get_old_product_price);
             $('#product_price').html(get_product_price_by_offer);
             $('#color-select').html(colorSelect);
-            $('#product_desc').html(get_product_short_desc);
+            $('#product_desc').html(get_product_desc);
             $('#product_table').html(get_product_table);
             $('#product_is_available').html(`<h4 id="product_is_available" class="h4 mt-2 text-center">محصول در انبار موجود نیست</h4>`);
           }else{
@@ -146,11 +149,11 @@ $(document).ready(function() {
             $('#slide_image').append(slideimg);
             $('#product_model_title').html(get_product_model_title);
             $('#product_model_cat').html(get_product_model_cat);
-            $('#product_short_desc').html(get_product_desc);
+            $('#product_short_desc').html(get_product_short_desc);
             $('#old_product_price').html(``);
             $('#product_price').html(get_product_price);
             $('#color-select').html(colorSelect);
-            $('#product_desc').html(get_product_short_desc);
+            $('#product_desc').html(get_product_desc);
             $('#product_table').html(get_product_table);
             $('#product_is_available').html(`<h4 id="product_is_available" class="h4 mt-2 text-center">محصول در انبار موجود نیست</h4>`);
           }
@@ -159,19 +162,13 @@ $(document).ready(function() {
     });
   }
 
-  // Add product id
-  $('#add_cart_btn').click(function() {
-    let get_add_product_id = `<input id="add_to_cart_product" type="hidden" name="product_id" value="${productPageId}"></input>`;
-    $('#add_to_cart_product').html(get_add_product_id);
-  });
-
   // Color Select
   let selectElement = document.getElementById('color-select');
   selectElement.addEventListener('change', (event) => {
     const selectedValue = event.target.value;
     let get_add_to_cart_color = `<input id="add_to_cart_color" type="hidden" class="color-input" name="selected_color" value="${selectedValue}"></input>`;
     $('#add_to_cart_color').html(get_add_to_cart_color);
-    $('#selected-color').css("background-color", selectedColor);
+    $('#selected-color').css("background-color", selectedValue);
   });
   
   // Count Select
@@ -179,14 +176,14 @@ $(document).ready(function() {
     if (count > 1) {
       count--;
       countSpan.textContent = count;
-      let get_add_to_cart_quantity = `<input id="add_to_cart_quantity" type="number" name="quantity" value="${count}" min="1"></input>`;
+      let get_add_to_cart_quantity = `<input id="add_to_cart_quantity" type="hidden" name="quantity" value="${count}" min="1"></input>`;
       $('#add_to_cart_quantity').html(get_add_to_cart_quantity);
     }
   });
   incrementBtn.addEventListener("click", () => {
     count++;
     countSpan.textContent = count;
-    let get_add_to_cart_quantity = `<input id="add_to_cart_quantity" type="number" name="quantity" value="${count}" min="1"></input>`;
+    let get_add_to_cart_quantity = `<input id="add_to_cart_quantity" type="hidden" name="quantity" value="${count}" min="1"></input>`;
     $('#add_to_cart_quantity').html(get_add_to_cart_quantity);
   });
 

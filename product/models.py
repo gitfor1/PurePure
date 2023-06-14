@@ -230,7 +230,7 @@ class Discount(models.Model):
         ('fixed', 'ثابت'),
     )
     code = models.CharField(max_length=50, unique=True)
-    dis_type = models.CharField(max_length=20, choices=DISCOUNT_TYPES)
+    dis_type = models.CharField(max_length=20, choices=DISCOUNT_TYPES, verbose_name='نوع اعمال تخفیف')
     value = models.DecimalField(max_digits=10, decimal_places=2)
     product = models.ForeignKey(
         'product.InventoryItem',
