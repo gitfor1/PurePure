@@ -164,11 +164,12 @@ $(document).ready(function() {
 
   // Color Select
   let selectElement = document.getElementById('color-select');
+  let selectedColorDiv = document.querySelector('.selected-color');
   selectElement.addEventListener('change', (event) => {
     const selectedValue = event.target.value;
     let get_add_to_cart_color = `<input id="add_to_cart_color" type="hidden" class="color-input" name="selected_color" value="${selectedValue}"></input>`;
     $('#add_to_cart_color').html(get_add_to_cart_color);
-    $('#selected-color').css("background-color", selectedValue);
+    selectedColorDiv.style.backgroundColor = selectedValue;
   });
   
   // Count Select
