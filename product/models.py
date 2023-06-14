@@ -73,8 +73,6 @@ class ProductSlide(Orderable):
         help_text='مجموعه برای رنگ بندی انتخاب کنید',
     )
 
-    max_count = 1
-
     panels = [
         FieldPanel('slide_title'),
         FieldPanel('image'),
@@ -150,8 +148,6 @@ class ProductOffer(Orderable):
         on_delete=models.SET_NULL,
         help_text='مجموعه برای تخفیف انتخاب کنید',
     )
-
-    max_count = 1
 
     panels = [
         FieldPanel('offer_title'),
@@ -326,13 +322,13 @@ class InventoryItem(RoutablePageMixin, Page):
             InlinePanel("PRODUCT_SLIDE"),
         ], heading="انتخاب اسلاید تصاویر برای محصول"),
         MultiFieldPanel([
-            InlinePanel("PRODUCT_COLORS"),
+            InlinePanel("PRODUCT_COLORS", max_num=5, label="تصویر محصول"),
         ], heading="انتخاب رنگ بندی محصول"),
         FieldPanel('quantity'),
         FieldPanel('short_description'),
         FieldPanel('description'),
         MultiFieldPanel([
-            InlinePanel("PRODUCT_OFFER"),
+            InlinePanel("PRODUCT_OFFER", max_num=1, label="تخفیف محصول"),
         ], heading="افزودن تخفیف به محصول"),
         FieldPanel('is_active'),
         FieldPanel("product_type"),
