@@ -4,6 +4,9 @@ $(document).ready(function() {
   let countSpan = document.querySelector(".count");
   let decrementBtn = document.querySelector(".decrement");
   let incrementBtn = document.querySelector(".increment");
+  $(".pcontent").magicTabs({
+    headingTag: "h4",
+  });
   // load page
   function loadPages() {
     var currentPath = window.location.pathname;
