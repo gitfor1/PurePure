@@ -1,4 +1,10 @@
 $(document).ready(function() {
+  // set var
+  let count = 1;
+  let countSpan = document.querySelector(".count");
+  let decrementBtn = document.querySelector(".decrement");
+  let incrementBtn = document.querySelector(".increment");
+  // load page
   function loadPages() {
     var currentPath = window.location.pathname;
     var slug = currentPath.split('/').filter(Boolean).pop();
@@ -152,6 +158,38 @@ $(document).ready(function() {
       });
     });
   }
+
+  // Add product id
+  $('#add_cart_btn').click(function() {
+    let get_add_product_id = `<input id="add_to_cart_product" type="hidden" name="product_id" value="${productPageId}"></input>`;
+    $('#add_to_cart_product').html(get_add_product_id);
+  });
+
+  // Color Select
+  let selectElement = document.getElementById('color-select');
+  selectElement.addEventListener('change', (event) => {
+    const selectedValue = event.target.value;
+    let get_add_to_cart_color = `<input id="add_to_cart_color" type="hidden" class="color-input" name="selected_color" value="${selectedValue}"></input>`;
+    $('#add_to_cart_color').html(get_add_to_cart_color);
+    $('#selected-color').css("background-color", selectedColor);
+  });
+  
+  // Count Select
+  decrementBtn.addEventListener("click", () => {
+    if (count > 1) {
+      count--;
+      countSpan.textContent = count;
+      let get_add_to_cart_quantity = `<input id="add_to_cart_quantity" type="number" name="quantity" value="${count}" min="1"></input>`;
+      $('#add_to_cart_quantity').html(get_add_to_cart_quantity);
+    }
+  });
+  incrementBtn.addEventListener("click", () => {
+    count++;
+    countSpan.textContent = count;
+    let get_add_to_cart_quantity = `<input id="add_to_cart_quantity" type="number" name="quantity" value="${count}" min="1"></input>`;
+    $('#add_to_cart_quantity').html(get_add_to_cart_quantity);
+  });
+
 
   //SOME LOADS
   loadPages();

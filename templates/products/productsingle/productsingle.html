@@ -90,12 +90,13 @@
                     </select>
                     <div class="selected-color"></div>
                   </div>
-                  <button
-                    type="submit"
-                    class="w-100 btn btn-danger addtocard"
-                  >
-                    افزودن به سبد خرید
-                  </button>
+                  <form method="POST" action="{% url 'add_to_cart' %}">
+                    {% csrf_token %}
+                    <input id="add_to_cart_product" type="hidden" name="product_id" value="${productPageId}">
+                    <input id="add_to_cart_color" type="hidden" class="color-input" name="selected_color" value="">
+                    <input id="add_to_cart_quantity" type="number" name="quantity" value="1" min="1">
+                    <button id="add_cart_btn" class="w-100 btn btn-danger addtocard" type="submit">افزودن به سبد خرید</button>
+                  </form>
                 </div>
                 <button
                   type="submit"
@@ -196,9 +197,13 @@
               </select>
               <div class="selected-color" s></div>
             </div>
-            <button type="submit" class="w-100 btn btn-danger addtocard">
-              افزودن به سبد خرید
-            </button>
+            <form method="POST" action="{% url 'add_to_cart' %}">
+              {% csrf_token %}
+              <input id="add_to_cart_product" type="hidden" name="product_id" value="${productPageId}">
+              <input id="add_to_cart_color" type="hidden" class="color-input" name="selected_color" value="">
+              <input id="add_to_cart_quantity" type="number" name="quantity" value="1" min="1">
+              <button id="add_cart_btn" class="w-100 btn btn-danger addtocard" type="submit">افزودن به سبد خرید</button>
+            </form>
           </div>
           <button
             type="submit"
