@@ -53,7 +53,7 @@ class ProductChildPageSerializer(Field):
 
 
 class ProductSlide(Orderable):
-    ''' Product Color '''
+    ''' Product slide '''
     product_slide = ParentalKey("product.InventoryItem", related_name="PRODUCT_SLIDE")
     slide_title = models.CharField(max_length=14, verbose_name='عنوان اسلاید', db_index=True,)
     image = models.ForeignKey(
@@ -73,6 +73,8 @@ class ProductSlide(Orderable):
         help_text='مجموعه برای رنگ بندی انتخاب کنید',
     )
 
+    max_count = 1
+
     panels = [
         FieldPanel('slide_title'),
         FieldPanel('image'),
@@ -85,6 +87,7 @@ class ProductSlide(Orderable):
         APIField('image'),
         APIField('slide_desc'),
         APIField('collection'),
+        APIField('image', serializer=ImageRenditionField('fill-250x280')),
     ]
 
     def __str__(self):
@@ -147,6 +150,8 @@ class ProductOffer(Orderable):
         on_delete=models.SET_NULL,
         help_text='مجموعه برای تخفیف انتخاب کنید',
     )
+
+    max_count = 1
 
     panels = [
         FieldPanel('offer_title'),

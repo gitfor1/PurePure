@@ -67,8 +67,9 @@ $(document).ready(function() {
         <td>گارانتی محصول:</td>
         <td>${product.product_garr}</td>
       </tr>`;
-        let slideBTN='';
-        let slideimg='';
+        let slideimg=[
+          product.image.url,
+        ];
         let colorOptions = '';
         let get_product_price_by_offer = '';
         if(product.PRODUCT_OFFER.length > 0){
@@ -87,10 +88,11 @@ $(document).ready(function() {
         `;
         if (product.PRODUCT_SLIDE.length > 0) {
           for (var k = 0; k < product.PRODUCT_SLIDE.length; k++) {
-            slideBTN += `<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${product.PRODUCT_SLIDE[k].id}" aria-label="${product.PRODUCT_SLIDE[k].slide_title}"></button>`;
-            slideimg += `<div class="carousel-item active"> <img src="${product.PRODUCT_SLIDE[k].image.meta.download_url}" class="d-block w-100" alt="${product.PRODUCT_SLIDE[k].slide_title}"/> </div>`;
-          }
-        }
+            slideimg.push(product.PRODUCT_SLIDE[k].image.url);
+          }}
+        $("#gpro").zoomy(slideimg, {
+          height: 368,
+        });
         // Start send context to html page
         if(product.is_active && product.is_available){
           if(product.PRODUCT_OFFER.length > 0){
@@ -98,8 +100,6 @@ $(document).ready(function() {
             $('#product_title').html(get_product_title);
             $('#product_head').append(get_product_head);
             $('#btn_slide_one').html(get_btn_slide_one);
-            $('#slide_btn').append(slideBTN);
-            $('#slide_image').append(slideimg);
             $('#product_model_title').html(get_product_model_title);
             $('#product_model_cat').html(get_product_model_cat);
             $('#product_short_desc').html(get_product_short_desc);
@@ -114,8 +114,6 @@ $(document).ready(function() {
             $('#product_title').html(get_product_title);
             $('#product_head').append(get_product_head);
             $('#btn_slide_one').html(get_btn_slide_one);
-            $('#slide_btn').append(slideBTN);
-            $('#slide_image').append(slideimg);
             $('#product_model_title').html(get_product_model_title);
             $('#product_model_cat').html(get_product_model_cat);
             $('#product_short_desc').html(get_product_short_desc);
@@ -132,8 +130,6 @@ $(document).ready(function() {
             $('#product_title').html(get_product_title);
             $('#product_head').append(get_product_head);
             $('#btn_slide_one').html(get_btn_slide_one);
-            $('#slide_btn').append(slideBTN);
-            $('#slide_image').append(slideimg);
             $('#product_model_title').html(get_product_model_title);
             $('#product_model_cat').html(get_product_model_cat);
             $('#product_short_desc').html(get_product_short_desc);
@@ -148,8 +144,6 @@ $(document).ready(function() {
             $('#product_title').html(get_product_title);
             $('#product_head').append(get_product_head);
             $('#btn_slide_one').html(get_btn_slide_one);
-            $('#slide_btn').append(slideBTN);
-            $('#slide_image').append(slideimg);
             $('#product_model_title').html(get_product_model_title);
             $('#product_model_cat').html(get_product_model_cat);
             $('#product_short_desc').html(get_product_short_desc);
