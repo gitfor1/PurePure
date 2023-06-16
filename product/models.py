@@ -139,7 +139,7 @@ class ProductOffer(Orderable):
     ''' Product Offer '''
     product_offer = ParentalKey("product.InventoryItem", related_name="PRODUCT_OFFER")
     offer_title = models.CharField(max_length=14, verbose_name='عنوان تخفیف', db_index=True,)
-    value = models.PositiveIntegerField(verbose_name='مبلغ جدید')
+    value = models.PositiveIntegerField(verbose_name='قیمت جدید محصول')
     offer_des = models.CharField(max_length=35, verbose_name='توضیحات تخفیف', null=True, blank=True)
     collection = models.ForeignKey(
         'wagtailcore.Collection',
@@ -298,7 +298,7 @@ class InventoryItem(RoutablePageMixin, Page):
     )
     price = models.PositiveIntegerField(verbose_name='قیمت', blank=False, null=False)
     short_description = models.CharField(max_length=300, db_index=True, null=True, blank=True, verbose_name='توضیحات کوتاه')
-    is_active = models.BooleanField(default=False, verbose_name='فعال / غیرفعال', blank=False, null=False)
+    is_active = models.BooleanField(default=True, verbose_name='فعال / غیرفعال', blank=False, null=False)
     is_available = models.BooleanField(default=True, verbose_name='موجودی / عدم موجودی', blank=False, null=False)
     product_type = models.CharField(max_length=30, db_index=True, null=True, blank=True, verbose_name='نوع محصول')
     product_jense = models.CharField(max_length=30, db_index=True, null=True, blank=True, verbose_name='جنس محصول')

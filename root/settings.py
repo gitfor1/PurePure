@@ -17,9 +17,6 @@ PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SET BASE DIR
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
-# PRODUCT MODEL
-CART_PRODUCT_MODEL = 'product.models.InventoryItem'
-
 # Site cookie
 SESSION_COOKIE_AGE = 86400
 CART_SESSION_ID = 'cart'

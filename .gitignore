@@ -5,7 +5,7 @@ __pycache__/
 # Django development server
 *.pid
 *.log
-
+MDBDB
 # Django migrations
 migrations
 

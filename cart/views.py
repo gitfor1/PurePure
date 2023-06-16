@@ -5,7 +5,7 @@ from django.views.generic import ListView, DetailView
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpRequest, JsonResponse
 from product.forms import DiscountForm
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from .cart import Cart 
 
@@ -19,19 +19,21 @@ def cart_view(request):
 @csrf_exempt
 def add_to_cart(request):
     cart = Cart(request)
-    product_id = int(request.POST.get('product_id'))
-    product_quantity = int(request.POST.get('quantity'))
+    product_id = request.POST.get('product_id')
+    product_quantity = request.POST.get('quantity')
+    product_color_quantity = request.POST.get('product_color_quantity')
+    add_cart_date = request.POST.get('add_cart_date')
     product_color_text = request.POST.get('selected_color_text')
     product_image = request.POST.get('product_image_url')
     try:
-        product = InventoryItem.objects.get(pk=product_id)
+        product = InventoryItem.objects.get(pk=int(product_id))
         if product.is_available and product.is_active:
             quantity_requested = product_quantity
-            if quantity_requested <= product.quantity and quantity_requested <= product.PRODUCT_COLORS.pquantity :
-                if product.PRODUCT_OFFER.value:
+            if int(quantity_requested) <= product.quantity and int(quantity_requested) <= int(product_color_quantity) :
+                if int(add_cart_date) > 0:
                     cart.add(
                         product_id=product_id, 
-                        price=product.PRODUCT_OFFER.value, 
+                        price=add_cart_date, 
                         quantity=quantity_requested, 
                         title=product.product_title, 
                         image=product_image, 
@@ -107,7 +109,7 @@ def update_cart(request):
 @csrf_exempt
 def remove_from_cart(request):
     cart = Cart(request)
-    product_id = int(request.POST.get('product_id'))
+    product_id = request.POST.get('product_id')
     try:
         product = InventoryItem.objects.get(pk=product_id)
         cart.remove(product_id=product_id)

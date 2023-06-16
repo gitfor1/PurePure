@@ -1,9 +1,26 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block TITLE %}سبد خرید{% endblock %}
-
 {% block CONTENT %}
+{% if messages %}
+{% for message in messages %}
+    {% if message.tags == 'success' %}
+        <script>Swal.fire({
+          icon: "success",
+          title: "{{ message }}",
+          showConfirmButton: false,
+          timer: 2000,
+        });</script>
+    {% else %}
+        <script>Swal.fire({
+          icon: "error",
+          title: "{{ message }}",
+          showConfirmButton: false,
+          timer: 2000,
+        });</script>
+    {% endif %}
+{% endfor %}
+{% endif %}
 <header class="headerblog">
   <div class="h1divhead">
     <h1 class="blogh1 white-color">سبد خرید</h1>
@@ -26,18 +43,18 @@
         <tr>
           <td>{{ product.title }}</td>
           <td>
-            <img src="{{ product.image }}" width="80px" alt="{{ product.title }}">
+            <img src="//{{cart.get_image}}" width="80px" alt="">
           </td>
           <td>{{ product.price }}</td>
           <td>
             <form method="POST" action="{% url 'update_cart' %}">
               {% csrf_token %}
               <input type="hidden" name="product_id" value="{{ product.id }}">
-              <input type="number" name="quantity" value="{{ product.quantity }}" min="1">
+              <input type="number" name="quantity" value="{{ cart.get_quantity }}" min="1">
               <button type="submit">به‌روزرسانی</button>
             </form>
           </td>
-          <td>{{ product|cart_subtotal }}</td>
+          <td>{{ cart.cart_subtotal }}</td>
           <td>
             <form method="POST" action="{% url 'remove_from_cart' %}">
               {% csrf_token %}
@@ -61,12 +78,12 @@
         </tr>
         <tr>
           <td>جمع جزء</td>
-          <td>{{ product|cart_subtotal }}</td>
+          <td>{{ cart.cart_subtotal }}</td>
         </tr>
         <tr>
           <td>تخفیف</td>
           <td>
-            <form method="POST">
+            <form method="POST" action="{% url 'apply_discount' %}">
               {% csrf_token %}
               {{ discount }}
               <button type="submit" class="btn btn-outline-danger">اعمال تخفیف</button>
@@ -81,7 +98,7 @@
         </tr>
         <tr>
           <td>جمع کل</td>
-          <td>{{ products|cart_total_price }}</td>
+          <td>{{ cart.cart_total_price }}</td>
         </tr>
       </table>
     </div>

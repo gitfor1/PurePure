@@ -165,6 +165,8 @@
             <form method="POST" action="{% url 'add_to_cart' %}">
               {% csrf_token %}
               <input id="add_to_cart_product" type="hidden" name="product_id" value="${productPageId}">
+              <input id="add_to_cart_color_quantity" type="hidden" class="color-input" name="product_color_quantity" value="">
+              <input id="add_to_cart_date" type="hidden" class="color-input" name="add_cart_date" value="">
               <input id="add_to_cart_color_text" type="hidden" class="color-input" name="selected_color_text" value="">
               <input id="add_to_cart_image" type="hidden" class="color-input" name="product_image_url" value="">
               <input id="add_to_cart_quantity" type="hidden" name="quantity" value="1" min="1">
@@ -192,7 +194,6 @@
 {% block JS %}
     <script src="{% static 'js/product/product_single.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
-    <script src="{% static 'js/jquery/lq.js' %}"></script>
     <script src="{% static 'js/product/zoomy.js' %}"></script>
     <script src="{% static 'js/jquery/jquery.magic-tabs.js' %}"></script>
     <script
