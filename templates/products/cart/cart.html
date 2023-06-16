@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load product_tag %}
 {% load static %}
 
 {% block TITLE %}سبد خرید{% endblock %}
@@ -17,19 +16,17 @@
       <table class="cardtable">
         <tr>
           <th>محصول</th>
+          <th>تصویر محصول</th>
           <th>قیمت (تومان)</th>
           <th>تعداد</th>
           <th>جمع جزء</th>
           <th>عملیات</th>
         </tr>
-        {% for product in cart.products %}
+        {% for product in cart %}
         <tr>
+          <td>{{ product.title }}</td>
           <td>
-            {% if product.image %}
-            <img src="{{ product.image.url }}" width="80px" alt="{{ product.product_title }}">
-            {% else %}
-            <span>{{ product.product_title }}</span>
-            {% endif %}
+            <img src="{{ product.image }}" width="80px" alt="{{ product.title }}">
           </td>
           <td>{{ product.price }}</td>
           <td>
@@ -40,7 +37,7 @@
               <button type="submit">به‌روزرسانی</button>
             </form>
           </td>
-          <td>{{ product|calculate_subtotal }}</td>
+          <td>{{ product|cart_subtotal }}</td>
           <td>
             <form method="POST" action="{% url 'remove_from_cart' %}">
               {% csrf_token %}
@@ -64,7 +61,7 @@
         </tr>
         <tr>
           <td>جمع جزء</td>
-          <td>{{ cart.products|calculate_total_price }}</td>
+          <td>{{ product|cart_subtotal }}</td>
         </tr>
         <tr>
           <td>تخفیف</td>
@@ -76,6 +73,7 @@
             </form>
             <td>
               <form method="POST" action="{% url 'checkout' %}">
+                {% csrf_token %}
                 <button type="submit" class="btn btn-outline-danger">ثبت سفارش و پرداخت</button>
               </form>
             </td>
@@ -83,7 +81,7 @@
         </tr>
         <tr>
           <td>جمع کل</td>
-          <td>{{ cart.products|calculate_total_price }}</td>
+          <td>{{ products|cart_total_price }}</td>
         </tr>
       </table>
     </div>

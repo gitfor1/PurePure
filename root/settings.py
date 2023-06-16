@@ -20,6 +20,10 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 # PRODUCT MODEL
 CART_PRODUCT_MODEL = 'product.models.InventoryItem'
 
+# Site cookie
+SESSION_COOKIE_AGE = 86400
+CART_SESSION_ID = 'cart'
+
 # site id (for multi site enable)
 SITE_ID = 1
 
@@ -71,6 +75,7 @@ INSTALLED_APPS = [
     'index',
     'brand',
     'blog',
+    'cart',
 ]
 
 # REST FRAMEWORK CONF
@@ -111,6 +116,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.request',
                 'django.template.context_processors.debug',
+                'cart.context_processors.cart',
             ],
         },
     },

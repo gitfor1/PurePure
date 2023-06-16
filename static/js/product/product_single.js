@@ -19,6 +19,9 @@ $(document).ready(function() {
       $.getJSON(`/UNIQUEAPI174/pages/${productPages.id}`, function(Data) {
         let product = Data;
         document.title = product.title;
+        // set cart image
+        let get_add_cart_image = `<input id="add_to_cart_image" type="hidden" class="color-input" name="product_image_url" value="${product.image.url}">`;
+        $('#add_to_cart_image').html(get_add_cart_image);
         // Define variables
         let get_product_title = `<h1 class="blogh1 white-color">${product.title}</h1>`;
         let get_product_head = `<li>
@@ -28,15 +31,6 @@ $(document).ready(function() {
       <li>
         <a href="#" class="text-light-emphasis">${product.product_title}</a>
       </li>`;
-        let get_btn_slide_one = `<button
-        id="btn_slide_one"
-        type="button"
-        data-bs-target="#carouselExampleIndicators"
-        data-bs-slide-to="0"
-        class="active"
-        aria-current="true"
-        aria-label="${product.image.alt}"
-      ></button>`;
         let get_product_model_title = `<h1 id="product_model_title" class="blog-post-title h2">${product.product_title}</h1>`;
         let get_product_model_cat = `<a id="product_model_cat" href="">${product.collection.title}</a>`;
         let get_old_product_price = `<span id="old_product_price" class="h4 text-decoration-line-through icon2">${product.price} تومان</span>`;
@@ -163,9 +157,12 @@ $(document).ready(function() {
   let selectElement = document.getElementById('color-select');
   let selectedColorDiv = document.querySelector('.selected-color');
   selectElement.addEventListener('change', (event) => {
-    const selectedValue = event.target.value;
-    let get_add_to_cart_color = `<input id="add_to_cart_color" type="hidden" class="color-input" name="selected_color" value="${selectedValue}"></input>`;
-    $('#add_to_cart_color').html(get_add_to_cart_color);
+    let selectedValue = event.target.value;
+    let colorSelect = document.getElementById('color-select');
+    let selectedOption = colorSelect.options[colorSelect.selectedIndex];
+    let optionText = selectedOption.innerText;
+    let get_add_to_cart_color_text = `<input id="add_to_cart_color_text" type="hidden" class="color-input" name="selected_color_text" value="${optionText}"></input>`;
+    $('#add_to_cart_color_text').html(get_add_to_cart_color_text);
     selectedColorDiv.style.backgroundColor = selectedValue;
   });
   
