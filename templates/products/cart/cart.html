@@ -45,7 +45,7 @@
           <td>
             <img src="//{{cart.get_image}}" width="80px" alt="">
           </td>
-          <td>{{ product.price }}</td>
+          <td>{{ cart.get_price }}</td>
           <td>
             <form method="POST" action="{% url 'update_cart' %}">
               {% csrf_token %}

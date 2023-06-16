@@ -72,8 +72,22 @@ $(document).ready(function() {
         }
         if (product.PRODUCT_COLORS.length > 0) {
           for (let j = 0; j < product.PRODUCT_COLORS.length; j++) {
-            colorOptions += `<option value="${product.PRODUCT_COLORS[j].color}" selected>${product.PRODUCT_COLORS[j].color_title}</option>`;
-            color_quantity_dict[product.PRODUCT_COLORS[j].color_title] = product.PRODUCT_COLORS[j].pquantity;
+            colorOptions += `<option value="${product.PRODUCT_COLORS[j].color}">${product.PRODUCT_COLORS[j].color_title}</option>`;
+            color_quantity_dict[product.PRODUCT_COLORS[j].color] = product.PRODUCT_COLORS[j].pquantity;
+            if(j < product.PRODUCT_COLORS.length){
+              let selectedValue = product.PRODUCT_COLORS[j].color
+              let selectedColorDiv = document.querySelector('.selected-color');
+              let colorSelect = document.getElementById('color-select');
+              let selectedOption = colorSelect.options[colorSelect.selectedIndex];
+              let optionText = product.PRODUCT_COLORS[j].color
+              let color_quantity = color_quantity_dict[optionText];
+              let get_add_to_cart_color_text = `<input id="add_to_cart_color_text" type="hidden" class="color-input" name="selected_color_text" value="${optionText}"></input>`;
+              let get_add_to_cart_color_quantity = `<input id="add_to_cart_color_quantity" type="hidden" class="color-input" name="product_color_quantity" value="${color_quantity}">`;
+              $('#add_to_cart_color_text').html(get_add_to_cart_color_text);
+              $('#add_to_cart_color_quantity').html(get_add_to_cart_color_quantity);
+              selectedColorDiv.style.backgroundColor = selectedValue;
+
+            }
           }
         }
         let colorSelect = `
@@ -90,7 +104,7 @@ $(document).ready(function() {
         });
         // Start send context to html page
         if(product.is_active && product.is_available){
-          if(product.PRODUCT_OFFER.length > 0){
+          if(product.PRODUCT_OFFER.length){
             //available And Offer
             $('#product_title').html(get_product_title);
             $('#product_head').append(get_product_head);
@@ -122,7 +136,7 @@ $(document).ready(function() {
             $('#add_to_cart_date').html(`<input id="add_to_cart_date" type="hidden" class="color-input" name="add_cart_date" value="0">`);
           }
         }else{
-          if(product.PRODUCT_OFFER.length > 0){
+          if(product.PRODUCT_OFFER.length){
             //Not available And Offer
             $('#product_title').html(get_product_title);
             $('#product_head').append(get_product_head);
@@ -158,14 +172,14 @@ $(document).ready(function() {
     });
   }
 
-  // Color Select
   let selectElement = document.getElementById('color-select');
-  let selectedColorDiv = document.querySelector('.selected-color');
   selectElement.addEventListener('change', (event) => {
+    // Color Select
     let selectedValue = event.target.value;
+    let selectedColorDiv = document.querySelector('.selected-color');
     let colorSelect = document.getElementById('color-select');
     let selectedOption = colorSelect.options[colorSelect.selectedIndex];
-    let optionText = selectedOption.innerText;
+    let optionText = event.target.value;
     let color_quantity = color_quantity_dict[optionText];
     let get_add_to_cart_color_text = `<input id="add_to_cart_color_text" type="hidden" class="color-input" name="selected_color_text" value="${optionText}"></input>`;
     let get_add_to_cart_color_quantity = `<input id="add_to_cart_color_quantity" type="hidden" class="color-input" name="product_color_quantity" value="${color_quantity}">`;

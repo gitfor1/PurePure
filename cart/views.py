@@ -30,7 +30,7 @@ def add_to_cart(request):
         if product.is_available and product.is_active:
             quantity_requested = product_quantity
             if int(quantity_requested) <= product.quantity and int(quantity_requested) <= int(product_color_quantity) :
-                if int(add_cart_date) > 0:
+                if add_cart_date:
                     cart.add(
                         product_id=product_id, 
                         price=add_cart_date, 
@@ -41,7 +41,7 @@ def add_to_cart(request):
                         apply_discount=False, 
                         update_quantity=False,
                     )
-                    message = f"محصول {product.product_title}با موفقیت به سبد خرید اضافه شد."
+                    message = f"محصول {product.product_title} با موفقیت به سبد خرید اضافه شد."
                     messages.success(request, message)
                     response_data = {'success': True}
                 else:
@@ -55,7 +55,7 @@ def add_to_cart(request):
                         apply_discount=False, 
                         update_quantity=False,
                     )
-                    message = f"محصول {product.product_title}با موفقیت به سبد خرید اضافه شد."
+                    message = f"محصول {product.product_title} با موفقیت به سبد خرید اضافه شد."
                     messages.success(request, message)
                     response_data = {'success': True}
             else:
@@ -113,11 +113,13 @@ def remove_from_cart(request):
     try:
         product = InventoryItem.objects.get(pk=product_id)
         cart.remove(product_id=product_id)
-        message = f"محصول {product.product_title} با موفقیت از سبد خرید حذف شد."
-        response_data = {'success': True, 'message': message}
+        message = f"محصول {product.product_title} با موفقیت از سبد خرید حذف شد"
+        messages.success(request, message)
+        response_data = {'success': True}
     except product.DoesNotExist:
         message = "محصول مورد نظر پیدا نشد."
-        response_data = {'success': False, 'message': message}
+        messages.success(request, message)
+        response_data = {'success': False}
     
     return redirect(request.META.get('HTTP_REFERER'))
 
@@ -156,12 +158,6 @@ def apply_discount(request):
                 messages.success(request, message)
                 response_data = {'success': False}
 
-            return redirect(request.META.get('HTTP_REFERER'))
-        
-        else:
-            message = 'کد تخفیف با نا معتبر است'
-            messages.success(request, message)
-            response_data = {'success': False}
             return redirect(request.META.get('HTTP_REFERER'))
 
 @login_required

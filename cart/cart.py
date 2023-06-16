@@ -50,6 +50,18 @@ class Cart(object):
 
         self.save()
 
+    def get_product_id(self):
+        product_id = 0
+        for value in self.cart.values():
+            price = int(value['product_id'])
+        return product_id
+
+    def get_price(self):
+        price = 0
+        for value in self.cart.values():
+            price = int(value['price'])
+        return price
+
     def get_quantity(self):
         default_quantity = 0
         for value in self.cart.values():
