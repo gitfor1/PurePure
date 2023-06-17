@@ -2,25 +2,6 @@
 {% load static %}
 {% block TITLE %}سبد خرید{% endblock %}
 {% block CONTENT %}
-{% if messages %}
-{% for message in messages %}
-    {% if message.tags == 'success' %}
-        <script>Swal.fire({
-          icon: "success",
-          title: "{{ message }}",
-          showConfirmButton: false,
-          timer: 2000,
-        });</script>
-    {% else %}
-        <script>Swal.fire({
-          icon: "error",
-          title: "{{ message }}",
-          showConfirmButton: false,
-          timer: 2000,
-        });</script>
-    {% endif %}
-{% endfor %}
-{% endif %}
 <header class="headerblog">
   <div class="h1divhead">
     <h1 class="blogh1 white-color">سبد خرید</h1>
@@ -50,12 +31,14 @@
               {% csrf_token %}
               <input type="hidden" name="product_id" value="{{ product.id }}">
               <input type="number" name="quantity" value="{{ product.quantity }}" min="0">
-              <button type="submit">به‌روزرسانی</button>
+              <input type="hidden" name="product_collection" value="{{ product.product_collection }}">
+              <input type="hidden" name="product_price" value="{{ product.price }}">
+              <input type="hidden" name="product_color_quantity" value="{{ product.color_quantity }}">
+              <button id="update_quantity" type="button">به‌روزرسانی</button>
           </td>
           <td>{{ product.calculate_item_price }}</td>
           <td>
-              <input type="hidden" name="product_id" value="{{ product.id }}">
-              <button type="submit" class="btn btn-outline-danger">حذف</button>
+              <button id="remove_from_cart" type="button" class="btn btn-outline-danger">حذف</button>
           </td>
         </tr>
         {% empty %}
@@ -75,9 +58,10 @@
           <td>تخفیف</td>
           <td>
               {{ discount }}
-              <button type="submit" class="btn btn-outline-danger">اعمال تخفیف</button>
             <td>
-                <button type="submit" class="btn btn-outline-danger">ثبت سفارش و پرداخت</button>
+              <button id="clear_cart" type="button" class="btn btn-outline-danger">خالی کردن سبد خرید</button>
+              <button id="discount_code" type="button" class="btn btn-outline-danger">اعمال تخفیف</button>
+              <button id="order" type="button" class="btn btn-outline-danger">ثبت سفارش و پرداخت</button>
             </td>
           </td>
         </tr>
@@ -90,6 +74,6 @@
   </div>
 </div>
 {% block JS %}
-<script src="js/product/cart"></script>
+<script src="{% static 'js/product/cart.js' %}"></script>
 {% endblock %}
 {% endblock %}

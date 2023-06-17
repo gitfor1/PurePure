@@ -112,6 +112,7 @@ def remove_from_cart(request):
 def apply_discount(request):
     if request.method == 'POST':
         product_id = int(request.POST.get('product_id'))
+        price = int(request.POST.get('product_price'))
         category_id = int(request.POST.get('product_collection'))
         form = DiscountForm(request.POST)
         if form.is_valid():
@@ -119,7 +120,7 @@ def apply_discount(request):
             try:
                 if discount.product == product_id or discount.collection == category_id:
                     code = form.cleaned_data['code']
-                    discounted_price = InventoryItem.apply_discount(discount_code=code)
+                    discounted_price = InventoryItem.apply_discount(discount_code=code, price=price)
                     Cart.objects.filter(user=request.user.phoneNumber, product_id=product_id).update(price=int(discounted_price))
                     return JsonResponse({'status':"کد تخفیف با موفقیت اعمال شد.", 'success': True})
                 else:
