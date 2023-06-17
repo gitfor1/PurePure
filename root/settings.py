@@ -19,7 +19,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 # Site cookie
 SESSION_COOKIE_AGE = 86400
-CART_SESSION_ID = 'cart'
+FAV_SESSION_ID = 'favourite'
 
 # site id (for multi site enable)
 SITE_ID = 1
@@ -113,7 +113,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.request',
                 'django.template.context_processors.debug',
-                'cart.context_processors.cart',
+                'cart.context_processors.cart_items',
+                'cart.context_processors.cart_total',
             ],
         },
     },

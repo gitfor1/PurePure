@@ -1,6 +1,5 @@
 from index.extensions.jalali_converter import jalali_converter as jConvert
 from product.models import InventoryItem
-from carton.cart import Cart
 from django import template
 
 

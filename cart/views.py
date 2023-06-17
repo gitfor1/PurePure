@@ -1,13 +1,13 @@
-from product.models import InventoryItem, CartItem, Discount
 from django.contrib.auth.decorators import login_required
 from index.extensions.http_service import get_client_ip
 from django.views.generic import ListView, DetailView
 from django.views.decorators.csrf import csrf_exempt
+from product.models import InventoryItem, Discount
 from django.http import HttpRequest, JsonResponse
-from product.forms import DiscountForm
 from django.shortcuts import render, redirect
+from product.forms import DiscountForm
 from django.contrib import messages
-from .cart import Cart 
+from .models import Cart 
 
 
 @login_required
@@ -16,150 +16,124 @@ def cart_view(request):
     return render(request, 'products/cart/cart.html',{'discount': discount})
 
 @login_required
-@csrf_exempt
 def add_to_cart(request):
-    cart = Cart(request)
-    product_id = request.POST.get('product_id')
-    product_quantity = request.POST.get('quantity')
-    product_color_quantity = request.POST.get('product_color_quantity')
-    add_cart_date = request.POST.get('add_cart_date')
-    product_color_text = request.POST.get('selected_color_text')
-    product_image = request.POST.get('product_image_url')
-    try:
-        product = InventoryItem.objects.get(pk=int(product_id))
-        if product.is_available and product.is_active:
-            quantity_requested = product_quantity
-            if int(quantity_requested) <= product.quantity and int(quantity_requested) <= int(product_color_quantity) :
-                if add_cart_date:
-                    cart.add(
-                        product_id=product_id, 
-                        price=add_cart_date, 
-                        quantity=quantity_requested, 
-                        title=product.product_title, 
-                        image=product_image, 
-                        color=product_color_text,
-                        apply_discount=False, 
-                        update_quantity=False,
-                    )
-                    message = f"محصول {product.product_title} با موفقیت به سبد خرید اضافه شد."
-                    messages.success(request, message)
-                    response_data = {'success': True}
+    if request.method == 'POST':
+        if request.user.is_authenticated :
+            product_id = int(request.POST.get('product_id'))
+            product_title = request.POST.get('product_title')
+            product_collection = int(request.POST.get('product_collection'))
+            product_quantity = int(request.POST.get('quantity'))
+            product_color_text = request.POST.get('selected_color_text')
+            product_color_quantity = int(request.POST.get('product_color_quantity'))
+            product_image = request.POST.get('product_image_url')
+            add_cart_date = int(request.POST.get('add_cart_date'))
+            try:
+                product = InventoryItem.objects.get(pk=product_id)
+                if product.is_available and product.is_active:
+                    if(Cart.objects.filter(user=request.user.phoneNumber, product_title=product_title, color=product_color_text)):
+                        return JsonResponse({'status':"کالا با رنگ بندی انتحاب شده هم اکنون در سبد خرید شما موجود است", 'success': False})
+                    else:
+                        quantity_requested = product_quantity
+                        if quantity_requested <= product.quantity and quantity_requested <= product_color_quantity :
+                            if add_cart_date > 0:
+                                Cart.objects.create(
+                                    user = request.user.phoneNumber,
+                                    product_id = product_id,
+                                    product_title = product_title,
+                                    product_collection = product_collection,
+                                    quantity = product_quantity,
+                                    price = add_cart_date,
+                                    image = product_image,
+                                    color = product_color_text,
+                                    color_quantity = product_color_quantity,
+                                )
+                                return JsonResponse({'status':f"محصول {product.product_title} با موفقیت به سبد خرید اضافه شد.", 'success': True})
+                            else:
+                                Cart.objects.create(
+                                    user = request.user.phoneNumber,
+                                    product_id = product_id,
+                                    product_title = product_title,
+                                    product_collection = product_collection,
+                                    quantity = product_quantity,
+                                    price = product.price,
+                                    image = product_image,
+                                    color = product_color_text,
+                                    color_quantity = product_color_quantity,
+                                )
+                                return JsonResponse({'status':f"محصول {product.product_title} با موفقیت به سبد خرید اضافه شد.", 'success': True})
+                        else:
+                            return JsonResponse({'status':"تعداد سفارش درخواستی بیشتر از موجودی محصول است.", 'success': False})
                 else:
-                    cart.add(
-                        product_id=product_id, 
-                        price=product.price, 
-                        quantity=quantity_requested, 
-                        title=product.product_title, 
-                        image=product_image, 
-                        color=product_color_text, 
-                        apply_discount=False, 
-                        update_quantity=False,
-                    )
-                    message = f"محصول {product.product_title} با موفقیت به سبد خرید اضافه شد."
-                    messages.success(request, message)
-                    response_data = {'success': True}
-            else:
-                message = "تعداد سفارش درخواستی بیشتر از موجودی محصول است."
-                messages.error(request, message)
-                response_data = {'success': False}
-        else:
-            message = "موجودی محصول به پایان رسیده است."
-            messages.error(request, message)
-            response_data = {'success': False}
-    except InventoryItem.DoesNotExist:
-        message = "محصول مورد نظر پیدا نشد."
-        messages.error(request, message)
-        response_data = {'success': False}
+                    return JsonResponse({'status':"موجودی محصول به پایان رسیده است", 'success': False})
 
-    return redirect(request.META.get('HTTP_REFERER'))
+            except InventoryItem.DoesNotExist:
+                return JsonResponse({'status':"محصول مورد نظر پیدا نشد.", 'success': False})
+        else:
+            return JsonResponse({'status':"برای افزودن کالا به سبد خرید ابتدا باید ثبت نام کنید یا وارد حساب خود شوید", 'success': False})
+
+    return render(request, 'products/cart/cart.html',{'discount': discount})
 
 @login_required
-@csrf_exempt
 def update_cart(request):
     if request.method == 'POST':
         product_id = int(request.POST.get('product_id'))
         quantity = int(request.POST.get('quantity'))
-
+        color_quantity = product_color_quantity = int(request.POST.get('product_color_quantity'))
         try:
             product = InventoryItem.objects.get(pk=product_id)
             if quantity > 0:
-                if quantity <= product.quantity and quantity <= product.PRODUCT_COLORS.pquantity :
-                    cart = Cart(request)
-                    cart.add(
-                        product_id=product_id, 
-                        quantity=quantity, 
-                        update_quantity=True,
-                    )
-                    message = 'تعداد سفارش با موفقیت اعمال شد'
-                    messages.success(request, message)
-                    response_data = {'success': True}
+                if quantity <= product.quantity and quantity <= color_quantity :
+                    Cart.objects.filter(user=request.user.phoneNumber, product_id=product_id).update(quantity=quantity)
+                    return JsonResponse({'status':"تعداد درخواستی با موفقیت به روز شد", 'success': True})
                 else:
-                    message = "سفارش درخواستی بالاتر از موجودی محصول است."
-                    response_data = {'success': False, 'message': message}
+                    return JsonResponse({'status':"تعداد درخواستی بالاتر از موجودی محصول است.", 'success': False})
             else:
-                message = "تعداد محصول باید بیشتر از صفر باشد."
-                response_data = {'success': False, 'message': message}
+                Cart.objects.filter(product_id=product_id).delete()
+                return JsonResponse({'status':"محصول از سبد خرید حذف شد.", 'success': False})
         except InventoryItem.DoesNotExist:
-            message = "محصول مورد نظر پیدا نشد."
-            response_data = {'success': False, 'message': message}
-        
-        return redirect(request.META.get('HTTP_REFERER'))
+            return JsonResponse({'status':"محصول مورد پیدا نشد.", 'success': False})
+    else:
+        return render(request, 'products/cart/cart.html',{'discount': discount})
 
 @login_required
 @csrf_exempt
 def remove_from_cart(request):
-    cart = Cart(request)
-    product_id = request.POST.get('product_id')
-    try:
-        product = InventoryItem.objects.get(pk=product_id)
-        cart.remove(product_id=product_id)
-        message = f"محصول {product.product_title} با موفقیت از سبد خرید حذف شد"
-        messages.success(request, message)
-        response_data = {'success': True}
-    except product.DoesNotExist:
-        message = "محصول مورد نظر پیدا نشد."
-        messages.success(request, message)
-        response_data = {'success': False}
-    
-    return redirect(request.META.get('HTTP_REFERER'))
-
+    if request.method == 'POST':
+        product_id = request.POST.get('product_id')
+        try:
+            Cart.objects.filter(user=request.user.phoneNumber, product_id=product_id).delete()
+            return JsonResponse({'status':"محصول از سبد خرید حذف شد.", 'success': True})
+        except product.DoesNotExist:
+            return JsonResponse({'status':"محصول مورد پیدا نشد.", 'success': False})
+    return render(request, 'products/cart/cart.html',{'discount': discount})
 
 @login_required
 @csrf_exempt
 def apply_discount(request):
     if request.method == 'POST':
         product_id = int(request.POST.get('product_id'))
-        category_id = int(request.POST.get('category_id'))
+        category_id = int(request.POST.get('product_collection'))
         form = DiscountForm(request.POST)
         if form.is_valid():
             discount = Discount.objects.get(code=form.cleaned_data['code'])
             try:
-                if discount.product.id == product_id or discount.collection.id == category_id:
+                if discount.product == product_id or discount.collection == category_id:
                     code = form.cleaned_data['code']
-                    cart = Cart(request)
-                    product = InventoryItem.objects.get(pk=product_id)
-                    discounted_price = product.apply_discount(discount_code=code)
-                    cart.add(
-                        product_id=product_id, 
-                        price=discounted_price, 
-                        apply_discount=True
-                    )
-                    message = 'کد تخفیف با موفقیت اعمال شد'
-                    messages.success(request, message)
-                    response_data = {'success': True}
-
+                    discounted_price = InventoryItem.apply_discount(discount_code=code)
+                    Cart.objects.filter(user=request.user.phoneNumber, product_id=product_id).update(price=int(discounted_price))
+                    return JsonResponse({'status':"کد تخفیف با موفقیت اعمال شد.", 'success': True})
                 else:
-                    message = 'کد تخفیف با نا معتبر است'
-                    messages.success(request, message)
-                    response_data = {'success': False}
-
-            except product_id.DoesNotExist:
-                message = 'محصول یافت نشد'
-                messages.success(request, message)
-                response_data = {'success': False}
-
-            return redirect(request.META.get('HTTP_REFERER'))
+                    return JsonResponse({'status':"کد تخفیف معتبر نیست", 'success': False})
+            except:
+                return JsonResponse({'status':"محصول مورد پیدا نشد.", 'success': False})
+    else:
+        return render(request, 'products/cart/cart.html',{'discount': discount})
 
 @login_required
-def CheckoutView(request):
-    pass
+def clear_cart(request):
+    if request.method == 'POST':
+        product_id = int(request.POST.get('product_id'))
+        Cart.objects.filter(user=request.user.phoneNumber).delete()
+        return JsonResponse({'status':"سبد خرید خالی شد.", 'success': True})
+    else:
+        return render(request, 'products/cart/cart.html',{'discount': discount})

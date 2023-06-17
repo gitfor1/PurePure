@@ -22,6 +22,9 @@ class ProductPageManager(PageManager):
     '''Inventory & Products Manager'''
     pass
 
+class InventoryItemPageManager(PageManager):
+    '''Inventory & Products Manager'''
+    pass
 
 # Product Index Child Serializer
 class ProductChildPageSerializer(Field):
@@ -308,6 +311,8 @@ class InventoryItem(RoutablePageMixin, Page):
     product_garr = models.CharField(max_length=30, db_index=True, null=True, blank=True, verbose_name='گارانتی محصول')
     total_visits = models.IntegerField(verbose_name='تعداد کل بازدید', default=0)
     
+    objects = InventoryItemPageManager()
+
     subpage_types = []
 
     parent_page_types = ['product.ProductIndex']
@@ -371,22 +376,22 @@ class InventoryItem(RoutablePageMixin, Page):
     def get_child_pages(self):
         return self.get_children().public().live()
 
-    def apply_discount(self, discount_code):
+    def apply_discount(self, discount_code, price):
         try:
             discount = Discount.objects.get(code=discount_code)
             if discount.start_date <= timezone.now().date() <= discount.end_date:
                 if discount.check_dis(discount_code):
                     if discount.dis_type == 'percentage':
                         # تخفیف بر اساس درصد
-                        discount_amount = self.price * Decimal(discount.value) / 100
+                        discount_amount = price * discount.value / 100
                     elif discount.dis_type == 'fixed':
                         # تخفیف به صورت مقدار ثابت
-                        discount_amount = Decimal(discount.value)
+                        discount_amount = discount.value
                     else:
                         # نوع تخفیف نامعتبر
-                        discount_amount = Decimal(0)
+                        discount_amount = 0
 
-                    final_price = self.price - discount_amount
+                    final_price = price - discount_amount
                     return final_price
 
         except Discount.DoesNotExist:
@@ -421,10 +426,15 @@ class InventoryItem(RoutablePageMixin, Page):
 
         return 'products/productsingle/productsingle.html'
 
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        return context
+
     def serve(self, request, *args, **kwargs):
         return render(
             request,
             self.get_template(request, *args, **kwargs),
+            self.get_context(request, *args, **kwargs),
         )
 
     def save(self, *args, **kwargs):
@@ -460,18 +470,6 @@ class Inventory(models.Model):
     class Meta:
         verbose_name = 'انبار کالا'
         verbose_name_plural = 'انبار کالا'
-
-
-class CartItem(models.Model):
-    product = models.ForeignKey(InventoryItem, on_delete=models.CASCADE, verbose_name='محصول')
-    quantity = models.PositiveIntegerField(verbose_name='تعداد')
-    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='قیمت')
-    total = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='مجموع')
-    
-    class Meta:
-        verbose_name = 'آیتم سبد خرید'
-        verbose_name_plural = 'آیتم‌های سبد خرید'
-
 
 
 class Invoice(models.Model):

@@ -6,25 +6,6 @@
 <link rel="stylesheet" href="{% static 'css/product/productsingle/zoomy.css' %}" />
 {% endblock %}
 {% block CONTENT %}
-{% if messages %}
-{% for message in messages %}
-    {% if message.tags == 'success' %}
-        <script>Swal.fire({
-          icon: "success",
-          title: "{{ message }}",
-          showConfirmButton: false,
-          timer: 2000,
-        });</script>
-    {% elif message.tags == 'error' %}
-        <script>Swal.fire({
-          icon: "error",
-          title: "{{ message }}",
-          showConfirmButton: false,
-          timer: 2000,
-        });</script>
-    {% endif %}
-{% endfor %}
-{% endif %}
 <header class="headerblog">
   <div id="product_title" class="h1divhead">
     <h1 class="blogh1 white-color">محصول تکی</h1>
@@ -151,7 +132,7 @@
             <span
               class="decrement cursor bi bi-dash-square-fill red-color"
             ></span>
-            <span class="count">1</span>
+            <span id="count" class="count">1</span>
             <span
               class="increment cursor bi bi-plus-square-fill red-color"
             ></span>
@@ -162,16 +143,15 @@
               </select>
               <div class="selected-color"></div>
             </div>
-            <form method="POST" action="{% url 'add_to_cart' %}">
               {% csrf_token %}
-              <input id="add_to_cart_product" type="hidden" name="product_id" value="${productPageId}">
+              <input id="add_to_cart_product" type="hidden" name="product_id" value="{{page.id}}">
+              <input id="add_to_cart_product_title" type="hidden" name="product_title" value="{{page.product_title}}">
               <input id="add_to_cart_color_quantity" type="hidden" class="color-input" name="product_color_quantity" value="">
               <input id="add_to_cart_date" type="hidden" class="color-input" name="add_cart_date" value="">
               <input id="add_to_cart_color_text" type="hidden" class="color-input" name="selected_color_text" value="">
-              <input id="add_to_cart_image" type="hidden" class="color-input" name="product_image_url" value="">
+              <input id="add_to_cart_image" type="hidden" class="color-input" name="product_image_url" value="{{product.image.url}}">
               <input id="add_to_cart_quantity" type="hidden" name="quantity" value="1" min="1">
               <button id="add_cart_btn" class="w-100 btn btn-danger addtocard" type="submit">افزودن به سبد خرید</button>
-            </form>
           </div>
           <button
             type="submit"

@@ -1,9 +1,11 @@
 username = 09129585714
 pass = QUEADMINISTRATOR174%!AbfsbflbdbPSJAFISHF@UNIQUEDOMIN.com
 
-            
-            
-
+URL name	View
+cart-add	AddItem
+cart-remove	RemoveItem
+cart-change-quantity	ChangeItemQuantity
+cart-empty	EmptyCart
                       <form method="POST" action="{% url 'add_to_cart' %}">
                         {% csrf_token %}
                         <input type="hidden" name="product_id" value="${productPageId}">

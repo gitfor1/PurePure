@@ -1,10 +1,13 @@
 $(document).ready(function() {
-  // set var
+  // set Variable
+  var product
+  var productPages
   let count = 1;
   let color_quantity_dict = {};
   let countSpan = document.querySelector(".count");
   let decrementBtn = document.querySelector(".decrement");
   let incrementBtn = document.querySelector(".increment");
+  var cart_create_date = '0'
   $(".pcontent").magicTabs({
     headingTag: "h4",
   });
@@ -13,16 +16,21 @@ $(document).ready(function() {
     var currentPath = window.location.pathname;
     var slug = currentPath.split('/').filter(Boolean).pop();
     $.getJSON(`/UNIQUEAPI174/pages/?slug=${slug}`, function(data) {
-      var productPages = data.items[0];
-        // set product id
+      productPages = data.items[0];
+      // set product id to input
       let get_add_product_id = `<input id="add_to_cart_product" type="hidden" name="product_id" value="${productPages.id}"></input>`;
-      $('#add_to_cart_product').html(get_add_product_id);
+      $('input[name=product_id').text(get_add_product_id);
+      // get product detail
       $.getJSON(`/UNIQUEAPI174/pages/${productPages.id}`, function(Data) {
-        let product = Data;
+        product = Data;
+        // set page title
         document.title = product.title;
-        // set cart image
+        // set product name to input
+        let get_add_product_title = `<input id="add_to_cart_product_title" type="hidden" name="product_title" value="${product.product_title}">`;
+        $('input[name=product_title]').html(get_add_product_title);
+        // set cart image to input
         let get_add_cart_image = `<input id="add_to_cart_image" type="hidden" class="color-input" name="product_image_url" value="${product.image.full_url}">`;
-        $('#add_to_cart_image').html(get_add_cart_image);
+        $('input[name=product_image_url]').html(get_add_cart_image);
         // Define variables
         let get_product_title = `<h1 class="blogh1 white-color">${product.title}</h1>`;
         let get_product_head = `<li>
@@ -66,9 +74,8 @@ $(document).ready(function() {
           product.image.url,
         ];
         let colorOptions = '';
-        let get_product_price_by_offer = '';
         if(product.PRODUCT_OFFER.length > 0){
-          get_product_price_by_offer += `<span id="product_price" class="h1">${product.PRODUCT_OFFER[0].value} تومان</span>`;
+          cart_create_date = `<span id="product_price" class="h1">${product.PRODUCT_OFFER[0].value} تومان</span>`;
         }
         if (product.PRODUCT_COLORS.length > 0) {
           for (let j = 0; j < product.PRODUCT_COLORS.length; j++) {
@@ -82,9 +89,8 @@ $(document).ready(function() {
               let optionText = product.PRODUCT_COLORS[j].color
               let color_quantity = color_quantity_dict[optionText];
               let get_add_to_cart_color_text = `<input id="add_to_cart_color_text" type="hidden" class="color-input" name="selected_color_text" value="${optionText}"></input>`;
-              let get_add_to_cart_color_quantity = `<input id="add_to_cart_color_quantity" type="hidden" class="color-input" name="product_color_quantity" value="${color_quantity}">`;
               $('#add_to_cart_color_text').html(get_add_to_cart_color_text);
-              $('#add_to_cart_color_quantity').html(get_add_to_cart_color_quantity);
+              $('input[name=product_color_quantity]').val(optionText);
               selectedColorDiv.style.backgroundColor = selectedValue;
 
             }
@@ -104,23 +110,19 @@ $(document).ready(function() {
         });
         // Start send context to html page
         if(product.is_active && product.is_available){
-          if(product.PRODUCT_OFFER.length){
-            //available And Offer
+          if(cart_create_date != '0'){
             $('#product_title').html(get_product_title);
             $('#product_head').append(get_product_head);
             $('#product_model_title').html(get_product_model_title);
             $('#product_model_cat').html(get_product_model_cat);
             $('#product_short_desc').html(get_product_short_desc);
             $('#old_product_price').html(get_old_product_price);
-            $('#product_price').html(get_product_price_by_offer);
+            $('#product_price').html(cart_create_date);
             $('#color-select').html(colorSelect);
             $('#product_desc').html(get_product_desc);
             $('#product_table').html(get_product_table);
             $('#product_is_available').html(`<h4 id="product_is_available" class="h4 mt-2 text-center">محصول در انبار موجود میباشد</h4>`);
-            // send cart date
-            $('#add_to_cart_date').html(`<input id="add_to_cart_date" type="hidden" class="color-input" name="add_cart_date" value="${product.PRODUCT_OFFER[0].value}">`);
           }else{
-            //available And no offer
             $('#product_title').html(get_product_title);
             $('#product_head').append(get_product_head);
             $('#product_model_title').html(get_product_model_title);
@@ -132,27 +134,21 @@ $(document).ready(function() {
             $('#product_desc').html(get_product_desc);
             $('#product_table').html(get_product_table);
             $('#product_is_available').html(`<h4 id="product_is_available" class="h4 mt-2 text-center">محصول در انبار موجود میباشد</h4>`);
-            // send cart date
-            $('#add_to_cart_date').html(`<input id="add_to_cart_date" type="hidden" class="color-input" name="add_cart_date" value="0">`);
           }
         }else{
-          if(product.PRODUCT_OFFER.length){
-            //Not available And Offer
+          if(cart_create_date != '0'){
             $('#product_title').html(get_product_title);
             $('#product_head').append(get_product_head);
             $('#product_model_title').html(get_product_model_title);
             $('#product_model_cat').html(get_product_model_cat);
             $('#product_short_desc').html(get_product_short_desc);
             $('#old_product_price').html(get_old_product_price);
-            $('#product_price').html(get_product_price_by_offer);
+            $('#product_price').html(cart_create_date);
             $('#color-select').html(colorSelect);
             $('#product_desc').html(get_product_desc);
             $('#product_table').html(get_product_table);
             $('#product_is_available').html(`<h4 id="product_is_available" class="h4 mt-2 text-center">محصول در انبار موجود نیست</h4>`);
-            // send cart date
-            $('#add_to_cart_date').html(`<input id="add_to_cart_date" type="hidden" class="color-input" name="add_cart_date" value="${product.PRODUCT_OFFER[0].value}">`);
           }else{
-            //Not available And NO Offer
             $('#product_title').html(get_product_title);
             $('#product_head').append(get_product_head);
             $('#product_model_title').html(get_product_model_title);
@@ -164,13 +160,67 @@ $(document).ready(function() {
             $('#product_desc').html(get_product_desc);
             $('#product_table').html(get_product_table);
             $('#product_is_available').html(`<h4 id="product_is_available" class="h4 mt-2 text-center">محصول در انبار موجود نیست</h4>`);
-            // send cart date
-            $('#add_to_cart_date').html(`<input id="add_to_cart_date" type="hidden" class="color-input" name="add_cart_date" value="0">`);
           }
         }
       });
     });
   }
+
+  // Add to cart button
+  $('#add_cart_btn').click(function(e) {
+    e.preventDefault();
+    // Select product values from html document
+    let product_title = $('#add_to_cart_product_title').val();
+    let product_quantity = $('#count').text();
+    let product_color = $('#color-select').val();
+    let product_color_quantity = color_quantity_dict[product_color];
+    let product_add_cart_date = cart_create_date;
+    let token = $('input[name=csrfmiddlewaretoken]').val();
+    // Data to be sent with the POST request
+    let data = {
+      'product_id':productPages.id,
+      'product_title': product_title,
+      'product_collection': product.collection.id,
+      'quantity':product_quantity,
+      'selected_color_text':product_color,
+      'product_color_quantity':product_color_quantity,
+      'product_image_url':product.image.url,
+      'add_cart_date':product_add_cart_date,
+      csrfmiddlewaretoken: token,
+    };
+    // Send request to server
+    $.ajax({
+      url: '/cart/add',
+      type: 'POST',
+      data: data,
+      success: function(response) {
+        if (response.success === false) {
+          Swal.fire({
+            icon: "error",
+            title: response.status,
+            showConfirmButton: false,
+            timer: 3000,
+          });
+        } else {
+          Swal.fire({
+            icon: "success",
+            title: response.status,
+            showConfirmButton: false,
+            timer: 2000,
+          });
+        }
+      },
+      error: function(xhr, status, error) {
+        console.log(status);
+        Swal.fire({
+          icon: "error",
+          title: status,
+          showConfirmButton: false,
+          timer: 3000,
+        });
+      }
+    });
+  });
 
   let selectElement = document.getElementById('color-select');
   selectElement.addEventListener('change', (event) => {
@@ -184,7 +234,7 @@ $(document).ready(function() {
     let get_add_to_cart_color_text = `<input id="add_to_cart_color_text" type="hidden" class="color-input" name="selected_color_text" value="${optionText}"></input>`;
     let get_add_to_cart_color_quantity = `<input id="add_to_cart_color_quantity" type="hidden" class="color-input" name="product_color_quantity" value="${color_quantity}">`;
     $('#add_to_cart_color_text').html(get_add_to_cart_color_text);
-    $('#add_to_cart_color_quantity').html(get_add_to_cart_color_quantity);
+    $('input[name=product_color_quantity]').html(get_add_to_cart_color_quantity);
     selectedColorDiv.style.backgroundColor = selectedValue;
   });
   
@@ -192,7 +242,6 @@ $(document).ready(function() {
   decrementBtn.addEventListener("click", () => {
     if (count > 1) {
       count--;
-      console.log(count);
       countSpan.textContent = count;
       let get_add_to_cart_quantity = `<input id="add_to_cart_quantity" type="hidden" name="quantity" value="${count}" min="1"></input>`;
       $('#add_to_cart_quantity').html(get_add_to_cart_quantity);

@@ -29,7 +29,7 @@ urlpatterns = [
     path(DEVELOPERS_PANEL, admin.site.urls),
     path('cart/', include('cart.urls')),
     path(SITE_API, api_router.urls),
-
+    
     re_path(r'', include(wagtail_urls)),
 ]
 
