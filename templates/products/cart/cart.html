@@ -29,13 +29,6 @@
           <td>{{product.price}}</td>
           <td>
               {% csrf_token %}
-              <input type="hidden" name="product_id" class="product_id" value="{{ product.id }}">
-              <input type="hidden" name="product_title" class="product_title" value="{{ product.product_title }}">
-              <input type="number" id="quantity" name="quantity" class="quantity" value="{{ product.quantity }}" min="0">
-              <input type="hidden" name="product_collection" class="product_collection" value="{{ product.product_collection }}">
-              <input type="hidden" name="product_price" class="product_price" value="{{ product.price }}">
-              <input type="hidden" name="product_color_quantity" class="product_color_quantity" value="{{ product.color_quantity }}">
-              <button id="update_quantity" type="button" class="btn btn-outline-danger update_quantity">به‌روزرسانی</button>
           </td>
           <td>{{ product.calculate_item_price }}</td>
           <td>

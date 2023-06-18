@@ -1,19 +1,25 @@
 $(document).ready(function() {
-  var cart
+  var cart = {}
   function pageData() {
-    let userID = $('input[name=user]').val();
-    $.get(`/api/cart/?ordering=${userID}`, function(data) {
+    let user = $('input[name=user]').val();
+    $.get(`/api/cart/?ordering=${user}`, function(data) {
       let rest = data.results;
         for(let api = 0; api <= data.count; api++){
-          cart = {
+          cart = Object.assign(cart, {
             'id':rest[api].product_id,
-            'user':rest[api].product_user,
+            'user':user,
             'title':rest[api].product_title,
-            ''
-          };
+            'price':rest[api].price,
+            'color':rest[api].color,
+            'quantity':rest[api].quantity,
+            'color_quantity':rest[api].color_quantity,
+            'image':rest[api].image,
+            'collection':rest[api].product_collection,
+            'count':data.count,
+          });
+          // set page content
           console.log(cart);
         }
-
     });
   }
 
