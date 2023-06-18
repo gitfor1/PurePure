@@ -21,9 +21,6 @@ from .api import api_router
 import os.path
 
 
-router = routers.DefaultRouter()
-router.register(r'cartAPI', CartViewSet)
-
 # NOTE : PLEASE KEEP THIS FILE SAFE !
 urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
@@ -32,6 +29,7 @@ urlpatterns = [
     path(ADMINS_PANEL, include(wagtailadmin_urls)),
     path('UNIQUEDOC/', include(wagtaildocs_urls)),
     path(DEVELOPERS_PANEL, admin.site.urls),
+    path('api/cart/', CartViewSet.as_view(), name='cart-api'),
     path('cart/', include('cart.urls')),
     path(SITE_API, api_router.urls),
     

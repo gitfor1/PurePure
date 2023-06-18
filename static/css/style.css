@@ -16,6 +16,12 @@
 @import url("accounts/stylelogin.css");
 @import url("accounts/dashboard.css");
 
+@import url("accounts/userpanel.css");
+
+@import url("product/Checkout/Checkout.css");
+
+@import url("util/404page/404page.css");
+
 @import url("product/productarchive/productarchive.css");
 @import url("product/productsingle/productsingle.css");
 

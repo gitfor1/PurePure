@@ -1,4 +1,22 @@
 $(document).ready(function() {
+  var cart
+  function pageData() {
+    let userID = $('input[name=user]').val();
+    $.get(`/api/cart/?ordering=${userID}`, function(data) {
+      let rest = data.results;
+        for(let api = 0; api <= data.count; api++){
+          cart = {
+            'id':rest[api].product_id,
+            'user':rest[api].product_user,
+            'title':rest[api].product_title,
+            ''
+          };
+          console.log(cart);
+        }
+
+    });
+  }
+
   // update cart button 
   $('.update_quantity').click(function(e) {
     e.preventDefault();
@@ -179,4 +197,5 @@ $(document).ready(function() {
       }
     });
   });
+  pageData();
 });

@@ -7,16 +7,19 @@ from django.http import HttpRequest, JsonResponse
 from django.shortcuts import render, redirect
 from .serializers import CartSerializer
 from product.forms import DiscountForm
-from rest_framework import permissions
 from django.contrib import messages
-from rest_framework import viewsets
+from rest_framework import generics, filters
 from .models import Cart 
 
 
-class CartViewSet(viewsets.ModelViewSet):
+class CartViewSet(generics.ListCreateAPIView):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    ordering_fields = ['user', 'product_id', 'product_title', 'product_title', 'product_collection', 'quantity', 'price', 'image', 'color', 'color_quantity',]
+    search_fields = ['user', 'product_title']
+    
+    filter_backends = [filters.OrderingFilter, filters.SearchFilter]
+
 
 
 @login_required
@@ -168,3 +171,6 @@ def clear_cart(request):
             return JsonResponse({'status':"سبد خرید هم اکنون خالی است.", 'success': False})
     else:
         return render(request, 'products/cart/cart.html',{'discount': discount})
+
+def checkout(request):
+    return render(request,'products/checkout/checkout.html')

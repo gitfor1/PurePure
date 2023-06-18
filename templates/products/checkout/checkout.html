@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+{% load static %}
+{% load wagtailcore_tags %}
+{% block TITLE %}پرداخت نهایی{% endblock %}
+{% block HEADJS %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{% endblock %}
+{% block CONTENT %}
+<header class="headerblog">
+    <div class="h1divhead">
+        <h1 class="blogh1 white-color">تسویه حساب</h1>
+    </div>
+</header>
+<div class="container">
+    <div class="row g-5">
+        <div class="col-md-5 col-lg-4 order-md-last">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-danger">محصولات شما</span>
+                <span class="badge bg-danger rounded-pill">3</span>
+            </h4>
+            <ul class="list-group mb-3 w-100">
+                <li class="list-group-item d-flex justify-content-between lh-sm w-100">
+                    <div>
+                        <h6 class="my-0">نام محصول انتخاب شده</h6>
+                    </div>
+                    <span class="text-body-secondary">200,000 تومان</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-sm w-100">
+                    <div>
+                        <h6 class="my-0">نام محصول انتخاب شده</h6>
+                    </div>
+                    <span class="text-body-secondary">200,000 تومان</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-sm w-100">
+                    <div>
+                        <h6 class="my-0">نام محصول انتخاب شده</h6>
+                    </div>
+                    <span class="text-body-secondary">200,000 تومان</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between bg-body-tertiary w-100">
+                    <div class="text-danger">
+                        <h6 class="my-0">تخفیف</h6>
+                    </div>
+                    <span class="text-danger">250,000- تومان</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between w-100">
+                    <span>مبلغ کل</span>
+                    <strong>350,000 تومان</strong>
+                </li>
+            </ul>
+
+            <form class="card p-2">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="افزودن کد تخفیف" />
+                    <button type="submit" class="btn btn-danger">اعمال</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-7 col-lg-8">
+            <h4 class="mb-3">آدرس خود را وارد کنید</h4>
+            <form class="needs-validation" novalidate="">
+                <div class="row g-3">
+                    <div class="col-sm-4">
+                        <label for="firstName" class="form-label">نام</label>
+                        <input type="text" class="form-control" id="firstName" required />
+                    </div>
+
+                    <div class="col-sm-4">
+                        <label for="lastName" class="form-label">نام خانوادگی</label>
+                        <input type="text" class="form-control" id="lastName" required />
+                    </div>
+
+                    <div class="col-sm-4">
+                        <label for="tel" class="form-label">تلفن همراه</label>
+                        <div class="input-group has-validation">
+                            <input type="tel" class="form-control" id="tel" required />
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <label for="email" class="form-label">ایمیل
+              <span class="text-body-secondary">(اختیاری)</span></label
+            >
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              placeholder="you@example.com"
+            />
+          </div>
+
+          <div class="col-sm-4">
+            <label for="State" class="form-label">استان</label>
+                        <input type="text" class="form-control" id="State" required />
+                    </div>
+
+                    <div class="col-sm-4">
+                        <label for="City" class="form-label">شهر / شهرستان</label>
+                        <input type="text" class="form-control" id="City" required />
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="nationalcode" class="form-label">کدملی</label>
+                        <input type="text" class="form-control" id="nationalcode" required />
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="postalcode" class="form-label">کدپستی</label>
+                        <input type="text" class="form-control" id="postalcode" required />
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="tel2" class="form-label">تلفن ثابت
+              <span class="text-body-secondary">(اختیاری)</span>
+            </label>
+                        <div class="input-group has-validation">
+                            <input type="tel" class="form-control" id="tel2" />
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <label for="address" class="form-label">آدرس دقیق</label>
+                        <input type="text" class="form-control" id="address" required />
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="address2" class="form-label">زنگ / پلاک
+              <span class="text-body-secondary">(اختیاری)</span></label
+            >
+            <input type="text" class="form-control" id="address2" />
+          </div>
+          <hr class="my-4" />
+        </div>
+
+        <div class="col-sm-5">
+            <label for="validationCustom04" class="form-label"
+            >انتخاب روش ارسال</label
+          >
+          <select class="form-select" id="validationCustom04" required>
+            <option selected disabled value="">انتخاب کنید</option>
+            <option>تیپاکس : 50,000 تومان</option>
+            <option>پست : 20,000 تومان</option>
+            <option>میاره : 30,000 تومان</option>
+            <option>پست پیشتاژ : 80,000 تومان</option>
+          </select>
+        </div>
+        <hr class="my-4" />
+
+        <button class="w-100 btn btn-danger btn-lg" type="submit">
+          پرداخت نهایی
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+    {% block JS %}
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"
+      integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE"
+      crossorigin="anonymous"
+    ></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+{% endblock %}
+{% endblock %}
