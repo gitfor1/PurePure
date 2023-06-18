@@ -29,17 +29,17 @@
           <td>{{product.price}}</td>
           <td>
               {% csrf_token %}
-              <input type="hidden" name="product_id" value="{{ product.id }}">
-              <input type="hidden" name="product_title" value="{{ product.product_title }}">
-              <input type="number" name="quantity" value="{{ product.quantity }}" min="0">
-              <input type="hidden" name="product_collection" value="{{ product.product_collection }}">
-              <input type="hidden" name="product_price" value="{{ product.price }}">
-              <input type="hidden" name="product_color_quantity" value="{{ product.color_quantity }}">
-              <button id="update_quantity" type="button">به‌روزرسانی</button>
+              <input type="hidden" name="product_id" class="product_id" value="{{ product.id }}">
+              <input type="hidden" name="product_title" class="product_title" value="{{ product.product_title }}">
+              <input type="number" id="quantity" name="quantity" class="quantity" value="{{ product.quantity }}" min="0">
+              <input type="hidden" name="product_collection" class="product_collection" value="{{ product.product_collection }}">
+              <input type="hidden" name="product_price" class="product_price" value="{{ product.price }}">
+              <input type="hidden" name="product_color_quantity" class="product_color_quantity" value="{{ product.color_quantity }}">
+              <button id="update_quantity" type="button" class="btn btn-outline-danger update_quantity">به‌روزرسانی</button>
           </td>
           <td>{{ product.calculate_item_price }}</td>
           <td>
-              <button id="remove_from_cart" type="button" class="btn btn-outline-danger">حذف</button>
+              <button id="remove_from_cart" type="button" class="btn btn-outline-danger remove_from_cart">حذف</button>
           </td>
         </tr>
         {% empty %}
@@ -59,11 +59,11 @@
           <td>تخفیف</td>
           <td>
               {{ discount }}
-              <button id="clear_cart" type="button" class="btn btn-outline-danger">خالی کردن سبد خرید</button>
+              <button id="clear_cart" type="button" class="btn btn-outline-danger clear_cart">خالی کردن سبد خرید</button>
             <td>
-              <button id="discount_code" type="button" class="btn btn-outline-danger">اعمال تخفیف</button>
+              <button id="discount_code" type="button" class="btn btn-outline-danger discount_code">اعمال تخفیف</button>
             </td>
-            <td><button id="order" type="button" class="btn btn-outline-danger">ثبت سفارش و پرداخت</button></td>
+            <td><button id="order" type="button" class="btn btn-outline-danger order">ثبت سفارش و پرداخت</button></td>
             </td>
           </td>
         </tr>

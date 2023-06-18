@@ -12,8 +12,14 @@ from .models import Cart
 
 @login_required
 def cart_view(request):
+    list_cart = Cart.objects.filter(user=request.user.phoneNumber)
+    cart_count = list_cart.count()
     discount = DiscountForm()
-    return render(request, 'products/cart/cart.html',{'discount': discount})
+    context = {
+        'discount': discount,
+        'cart_list': cart_count,
+    }
+    return render(request, 'products/cart/cart.html',context)
 
 @login_required
 def add_to_cart(request):
@@ -83,7 +89,7 @@ def update_cart(request):
             product = InventoryItem.objects.get(product_title=product_title)
             if quantity <= product.quantity and quantity <= color_quantity:
                 try:
-                    user_cart = Cart.objects.filter(user=request.user.phoneNumber, product_title=product_title)
+                    user_cart = Cart.objects.get(user=request.user.phoneNumber, product_title=product_title)
                     user_cart.quantity = quantity
                     user_cart.save()
                     return JsonResponse({'status': "تعداد درخواستی با موفقیت به روز شد", 'success': True})
@@ -94,7 +100,7 @@ def update_cart(request):
         else:
             try:
                 Cart.objects.filter(user=request.user.phoneNumber, product_title=product_title).delete()
-                return JsonResponse({'status':"محصول از سبد خرید حذف شد.", 'success': False})
+                return JsonResponse({'status':"محصول از سبد خرید حذف شد.", 'success': True})
             except Cart.DoesNotExist:
                 return JsonResponse({'status': "محصول مورد پیدا نشد.", 'success': False})
     else:
@@ -109,7 +115,7 @@ def remove_from_cart(request):
             try:
                 Cart.objects.filter(user=request.user.phoneNumber, product_title=product_title).delete()
                 return JsonResponse({'status':"محصول از سبد خرید حذف شد.", 'success': True})
-            except product.DoesNotExist:
+            except:
                 return JsonResponse({'status':"محصول مورد پیدا نشد.", 'success': False})
         else:
             return JsonResponse({'status':"محصول مورد پیدا نشد.", 'success': False})

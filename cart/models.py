@@ -13,7 +13,7 @@ class Cart(models.Model):
     image = models.CharField(max_length=100, verbose_name='تصویر محصول', null=True, blank=True)
     color = models.CharField(max_length=30, verbose_name='رنگ محصول', null=True, blank=True)
     color_quantity = models.PositiveIntegerField(verbose_name='تعداد رنگ بندی موجود', null=True)
-
+    
     def calculate_item_price(self):
         item_price = 0
         if self.quantity and self.price:

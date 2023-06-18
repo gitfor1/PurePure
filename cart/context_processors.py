@@ -1,7 +1,10 @@
 from .models import Cart 
 
 def cart_items(request):
-    cart = Cart.objects.filter(user=request.user.phoneNumber)
+    if request.user.is_authenticated:
+        cart = Cart.objects.filter(user=request.user.phoneNumber)
+    else:
+        cart = 0
     return {'cart_items': cart}
 
 def cart_total(request):

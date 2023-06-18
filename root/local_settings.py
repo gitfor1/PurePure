@@ -19,10 +19,10 @@ LOCAL_ACCOUNT_USERNAME_BLACKLIST = ["admin", 'security', 'secure', 'protection',
            'virus', 'vulnerabilityassessment', 'zeroday', "god"]
 
 # CSRF LOCAL TRUSTED ORIGINS :
-CSRF_LOCAL_TRUSTED_ORIGINS = ['https://gitfor1-crispy-space-fiesta-rjqqqq6ww7phx47g-8000.preview.app.github.dev']
+CSRF_LOCAL_TRUSTED_ORIGINS = ['https://8000-gitfor1-purepure-gb7m02stbhb.ws-eu100.gitpod.io']
 
 # ALLOWED LOCAL HOSTS :
-ALLOWED_LOCAL_HOSTS = ['gitfor1-crispy-space-fiesta-rjqqqq6ww7phx47g-8000.preview.app.github.dev', '127.0.0.1', 'localhost']
+ALLOWED_LOCAL_HOSTS = ['8000-gitfor1-purepure-gb7m02stbhb.ws-eu100.gitpod.io', '127.0.0.1', 'localhost']
 
 # SECRET KEY
 SEC_KEY = 'django-insecure-38n_&5$5ga9)#!-r$&jcyk3^v^673x0u3%f8)*4ekxrd$)=ujs'
@@ -46,7 +46,7 @@ ADMINS_PANEL = 'UNIQUEADMINISTRATOR174/'
 DEVELOPERS_PANEL = 'UNIQUEDEVELOPER174/'
 
 # BASE_SITE
-BASE_ACTIVE_SITE = 'gitfor1-crispy-space-fiesta-rjqqqq6ww7phx47g-8000.preview.app.github.dev'
+BASE_ACTIVE_SITE = '8000-gitfor1-purepure-gb7m02stbhb.ws-eu100.gitpod.io'
 
 # SITE API URL
 SITE_API = 'UNIQUEAPI174/'
