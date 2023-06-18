@@ -1,20 +1,20 @@
 $(document).ready(function() {
-    let token = $('input[name=csrfmiddlewaretoken]').val();
-    let product_id = $('input[name=product_id]').val();
-    let product_title = $('input[name=product_title]').val();
-    let product_quantity = $('input[name=quantity]').val();
-    let product_collection = $('input[name=product_collection]').val();
-    let product_price = $('input[name=product_price]').val();
-    let product_color_quantity = $('input[name=product_color_quantity]').val();
   // update cart button 
   $('#update_quantity').click(function(e) {
     e.preventDefault();
+    let token = $('input[name=csrfmiddlewaretoken]').val();
+    let cart_id = $('input[name=cart_id]').val();
+    let product_title = $('input[name=product_title]').val();
+    let product_color_quantity = $('input[name=product_color_quantity]').val();
+    let product_quantity = $('input[name=quantity]').val();
     let data = {
+        'cart_id':cart_id,
         'product_title': product_title,
         'quantity':product_quantity,
         'product_color_quantity': product_color_quantity,
         csrfmiddlewaretoken: token,
     };
+    console.log(product_quantity);
     // Send request to server
     $.ajax({
       url: '/cart/update',
@@ -35,6 +35,7 @@ $(document).ready(function() {
             showConfirmButton: false,
             timer: 2000,
           });
+          location.reload(true);
         }
       },
       error: function(xhr, status, error) {
@@ -51,6 +52,8 @@ $(document).ready(function() {
     // remove item
   $('#remove_from_cart').click(function(e) {
     e.preventDefault();
+    let token = $('input[name=csrfmiddlewaretoken]').val();
+    let product_title = $('input[name=product_title]').val();
     let data = {
         'product_title': product_title,
         csrfmiddlewaretoken: token,
@@ -75,6 +78,7 @@ $(document).ready(function() {
             showConfirmButton: false,
             timer: 2000,
           });
+          location.reload(true);
         }
       },
       error: function(xhr, status, error) {
@@ -91,6 +95,10 @@ $(document).ready(function() {
     // apply discount
   $('#discount_code').click(function(e) {
     e.preventDefault();
+    let token = $('input[name=csrfmiddlewaretoken]').val();
+    let product_title = $('input[name=product_title]').val();
+    let product_collection = $('input[name=product_collection]').val();
+    let product_price = $('input[name=product_price]').val();
     let data = {
         'product_title': product_title,
         'product_price': product_price,
@@ -117,6 +125,7 @@ $(document).ready(function() {
             showConfirmButton: false,
             timer: 2000,
           });
+          location.reload(true);
         }
       },
       error: function(xhr, status, error) {
@@ -133,6 +142,8 @@ $(document).ready(function() {
     // clear cart
   $('#clear_cart').click(function(e) {
     e.preventDefault();
+    let token = $('input[name=csrfmiddlewaretoken]').val();
+    let product_id = $('input[name=product_id]').val();
     let data = {
         'product_id': product_id,
         csrfmiddlewaretoken: token,

@@ -77,15 +77,14 @@ def add_to_cart(request):
 def update_cart(request):
     if request.method == 'POST':
         product_title = request.POST.get('product_title')
+        cart_id = request.POST.get('cart_id')
         quantity = int(request.POST.get('quantity'))
         color_quantity = product_color_quantity = int(request.POST.get('product_color_quantity'))
         if quantity > 0:
             product = InventoryItem.objects.get(product_title=product_title)
             if quantity <= product.quantity and quantity <= color_quantity:
                 try:
-                    user_cart = Cart.objects.filter(user=request.user.phoneNumber, product_title=product_title)
-                    user_cart.quantity = quantity
-                    user_cart.save()
+                    Cart.objects.filter(id=int(cart_id)).update(quantity=quantity)
                     return JsonResponse({'status': "تعداد درخواستی با موفقیت به روز شد", 'success': True})
                 except Cart.DoesNotExist:
                     return JsonResponse({'status': "محصول مورد پیدا نشد.", 'success': False})
