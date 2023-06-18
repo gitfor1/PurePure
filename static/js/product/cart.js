@@ -1,15 +1,16 @@
 $(document).ready(function() {
     let token = $('input[name=csrfmiddlewaretoken]').val();
     let product_id = $('input[name=product_id]').val();
+    let product_title = $('input[name=product_title]').val();
     let product_quantity = $('input[name=quantity]').val();
     let product_collection = $('input[name=product_collection]').val();
     let product_price = $('input[name=product_price]').val();
     let product_color_quantity = $('input[name=product_color_quantity]').val();
-  // update cart button
+  // update cart button 
   $('#update_quantity').click(function(e) {
     e.preventDefault();
     let data = {
-        'product_id': product_id,
+        'product_title': product_title,
         'quantity':product_quantity,
         'product_color_quantity': product_color_quantity,
         csrfmiddlewaretoken: token,
@@ -51,7 +52,7 @@ $(document).ready(function() {
   $('#remove_from_cart').click(function(e) {
     e.preventDefault();
     let data = {
-        'product_id': product_id,
+        'product_title': product_title,
         csrfmiddlewaretoken: token,
     };
     // Send request to server
@@ -91,7 +92,7 @@ $(document).ready(function() {
   $('#discount_code').click(function(e) {
     e.preventDefault();
     let data = {
-        'product_id': product_id,
+        'product_title': product_title,
         'product_price': product_price,
         'product_collection': product_collection,
         csrfmiddlewaretoken: token,

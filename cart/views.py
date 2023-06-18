@@ -76,22 +76,27 @@ def add_to_cart(request):
 @login_required
 def update_cart(request):
     if request.method == 'POST':
-        product_id = int(request.POST.get('product_id'))
+        product_title = request.POST.get('product_title')
         quantity = int(request.POST.get('quantity'))
         color_quantity = product_color_quantity = int(request.POST.get('product_color_quantity'))
-        try:
-            product = InventoryItem.objects.get(pk=product_id)
-            if quantity > 0:
-                if quantity <= product.quantity and quantity <= color_quantity :
-                    Cart.objects.filter(user=request.user.phoneNumber, product_id=product_id).update(quantity=quantity)
-                    return JsonResponse({'status':"تعداد درخواستی با موفقیت به روز شد", 'success': True})
-                else:
-                    return JsonResponse({'status':"تعداد درخواستی بالاتر از موجودی محصول است.", 'success': False})
+        if quantity > 0:
+            product = InventoryItem.objects.get(product_title=product_title)
+            if quantity <= product.quantity and quantity <= color_quantity:
+                try:
+                    user_cart = Cart.objects.filter(user=request.user.phoneNumber, product_title=product_title)
+                    user_cart.quantity = quantity
+                    user_cart.save()
+                    return JsonResponse({'status': "تعداد درخواستی با موفقیت به روز شد", 'success': True})
+                except Cart.DoesNotExist:
+                    return JsonResponse({'status': "محصول مورد پیدا نشد.", 'success': False})
             else:
-                Cart.objects.filter(product_id=product_id).delete()
+                return JsonResponse({'status': "تعداد درخواستی بالاتر از موجودی محصول است.", 'success': False})
+        else:
+            try:
+                Cart.objects.filter(user=request.user.phoneNumber, product_title=product_title).delete()
                 return JsonResponse({'status':"محصول از سبد خرید حذف شد.", 'success': False})
-        except InventoryItem.DoesNotExist:
-            return JsonResponse({'status':"محصول مورد پیدا نشد.", 'success': False})
+            except Cart.DoesNotExist:
+                return JsonResponse({'status': "محصول مورد پیدا نشد.", 'success': False})
     else:
         return render(request, 'products/cart/cart.html',{'discount': discount})
 
@@ -99,11 +104,14 @@ def update_cart(request):
 @csrf_exempt
 def remove_from_cart(request):
     if request.method == 'POST':
-        product_id = request.POST.get('product_id')
-        try:
-            Cart.objects.filter(user=request.user.phoneNumber, product_id=product_id).delete()
-            return JsonResponse({'status':"محصول از سبد خرید حذف شد.", 'success': True})
-        except product.DoesNotExist:
+        product_title = request.POST.get('product_title')
+        if product_title:
+            try:
+                Cart.objects.filter(user=request.user.phoneNumber, product_title=product_title).delete()
+                return JsonResponse({'status':"محصول از سبد خرید حذف شد.", 'success': True})
+            except product.DoesNotExist:
+                return JsonResponse({'status':"محصول مورد پیدا نشد.", 'success': False})
+        else:
             return JsonResponse({'status':"محصول مورد پیدا نشد.", 'success': False})
     return render(request, 'products/cart/cart.html',{'discount': discount})
 
@@ -111,30 +119,37 @@ def remove_from_cart(request):
 @csrf_exempt
 def apply_discount(request):
     if request.method == 'POST':
-        product_id = int(request.POST.get('product_id'))
-        price = int(request.POST.get('product_price'))
-        category_id = int(request.POST.get('product_collection'))
-        form = DiscountForm(request.POST)
-        if form.is_valid():
-            discount = Discount.objects.get(code=form.cleaned_data['code'])
-            try:
-                if discount.product == product_id or discount.collection == category_id:
-                    code = form.cleaned_data['code']
-                    discounted_price = InventoryItem.apply_discount(discount_code=code, price=price)
-                    Cart.objects.filter(user=request.user.phoneNumber, product_id=product_id).update(price=int(discounted_price))
-                    return JsonResponse({'status':"کد تخفیف با موفقیت اعمال شد.", 'success': True})
-                else:
-                    return JsonResponse({'status':"کد تخفیف معتبر نیست", 'success': False})
-            except:
-                return JsonResponse({'status':"محصول مورد پیدا نشد.", 'success': False})
+        product_title = request.POST.get('product_title')
+        if product_title:
+            price = int(request.POST.get('product_price'))
+            category_id = int(request.POST.get('product_collection'))
+            form = DiscountForm(request.POST)
+            if form.is_valid():
+                discount = Discount.objects.get(code=form.cleaned_data['code'])
+                try:
+                    if discount.product == product_id or discount.collection == category_id:
+                        code = form.cleaned_data['code']
+                        discounted_price = InventoryItem.apply_discount(discount_code=code, price=price)
+                        Cart.objects.filter(user=request.user.phoneNumber, product_title=product_title).update(price=int(discounted_price))
+                        return JsonResponse({'status':"کد تخفیف با موفقیت اعمال شد.", 'success': True})
+                    else:
+                        return JsonResponse({'status':"کد تخفیف معتبر نیست", 'success': False})
+                except:
+                    return JsonResponse({'status':"محصول مورد پیدا نشد.", 'success': False})
+        else:
+            return JsonResponse({'status':"محصول مورد پیدا نشد.", 'success': False})
+
     else:
         return render(request, 'products/cart/cart.html',{'discount': discount})
 
 @login_required
 def clear_cart(request):
     if request.method == 'POST':
-        product_id = int(request.POST.get('product_id'))
-        Cart.objects.filter(user=request.user.phoneNumber).delete()
-        return JsonResponse({'status':"سبد خرید خالی شد.", 'success': True})
+        product_id = request.POST.get('product_id')
+        if product_id:
+            Cart.objects.filter(user=request.user.phoneNumber).delete()
+            return JsonResponse({'status':"سبد خرید خالی شد.", 'success': True})
+        else:
+            return JsonResponse({'status':"سبد خرید هم اکنون خالی است.", 'success': False})
     else:
         return render(request, 'products/cart/cart.html',{'discount': discount})

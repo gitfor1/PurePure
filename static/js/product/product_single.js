@@ -75,7 +75,7 @@ $(document).ready(function() {
         ];
         let colorOptions = '';
         if(product.PRODUCT_OFFER.length > 0){
-          cart_create_date = `<span id="product_price" class="h1">${product.PRODUCT_OFFER[0].value} تومان</span>`;
+          cart_create_date = product.PRODUCT_OFFER[0].value;
         }
         if (product.PRODUCT_COLORS.length > 0) {
           for (let j = 0; j < product.PRODUCT_COLORS.length; j++) {
@@ -117,7 +117,7 @@ $(document).ready(function() {
             $('#product_model_cat').html(get_product_model_cat);
             $('#product_short_desc').html(get_product_short_desc);
             $('#old_product_price').html(get_old_product_price);
-            $('#product_price').html(cart_create_date);
+            $('#product_price').html(`<span id="product_price" class="h1">${product.PRODUCT_OFFER[0].value} تومان</span>`);
             $('#color-select').html(colorSelect);
             $('#product_desc').html(get_product_desc);
             $('#product_table').html(get_product_table);
@@ -143,7 +143,7 @@ $(document).ready(function() {
             $('#product_model_cat').html(get_product_model_cat);
             $('#product_short_desc').html(get_product_short_desc);
             $('#old_product_price').html(get_old_product_price);
-            $('#product_price').html(cart_create_date);
+            $('#product_price').html(`<span id="product_price" class="h1">${product.PRODUCT_OFFER[0].value} تومان</span>`);
             $('#color-select').html(colorSelect);
             $('#product_desc').html(get_product_desc);
             $('#product_table').html(get_product_table);

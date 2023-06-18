@@ -30,6 +30,7 @@
           <td>
               {% csrf_token %}
               <input type="hidden" name="product_id" value="{{ product.id }}">
+              <input type="hidden" name="product_title" value="{{ product.product_title }}">
               <input type="number" name="quantity" value="{{ product.quantity }}" min="0">
               <input type="hidden" name="product_collection" value="{{ product.product_collection }}">
               <input type="hidden" name="product_price" value="{{ product.price }}">
@@ -58,10 +59,11 @@
           <td>تخفیف</td>
           <td>
               {{ discount }}
-            <td>
               <button id="clear_cart" type="button" class="btn btn-outline-danger">خالی کردن سبد خرید</button>
+            <td>
               <button id="discount_code" type="button" class="btn btn-outline-danger">اعمال تخفیف</button>
-              <button id="order" type="button" class="btn btn-outline-danger">ثبت سفارش و پرداخت</button>
+            </td>
+            <td><button id="order" type="button" class="btn btn-outline-danger">ثبت سفارش و پرداخت</button></td>
             </td>
           </td>
         </tr>
