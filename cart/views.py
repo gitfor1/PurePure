@@ -5,9 +5,18 @@ from django.views.decorators.csrf import csrf_exempt
 from product.models import InventoryItem, Discount
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import render, redirect
+from .serializers import CartSerializer
 from product.forms import DiscountForm
+from rest_framework import permissions
 from django.contrib import messages
+from rest_framework import viewsets
 from .models import Cart 
+
+
+class CartViewSet(viewsets.ModelViewSet):
+    queryset = Cart.objects.all()
+    serializer_class = CartSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 
 @login_required

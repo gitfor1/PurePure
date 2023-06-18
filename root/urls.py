@@ -13,11 +13,16 @@ from django.views.generic.base import RedirectView
 from django.urls import include, path, re_path
 from django.conf.urls.static import static
 from wagtail import urls as wagtail_urls
+from cart.views import CartViewSet
+from rest_framework import routers
 from django.contrib import admin
 from django.conf import settings
 from .api import api_router
 import os.path
 
+
+router = routers.DefaultRouter()
+router.register(r'cartAPI', CartViewSet)
 
 # NOTE : PLEASE KEEP THIS FILE SAFE !
 urlpatterns = [
